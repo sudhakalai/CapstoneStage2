@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Medicine Reminder</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="today">Today</string>
+    <string name="history">History</string>
+    <string name="reminders">Reminders</string>
+    <string name="settings">Settings</string>
+</resources>
