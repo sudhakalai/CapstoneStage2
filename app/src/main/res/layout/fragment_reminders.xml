@@ -1,13 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.medicinereminder.UI.RemindersFragment">
+    android:id="@+id/constraint_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/reminders" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f6f6f6"
+            android:paddingBottom="16dp"
+            tools:context="com.example.android.medicinereminder.UI.RemindersFragment">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_reminders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/fab_reminder"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/constraint_layout"
+        app:layout_constraintRight_toRightOf="@id/constraint_layout"/>
+
+</android.support.constraint.ConstraintLayout>

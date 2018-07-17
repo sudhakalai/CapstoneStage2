@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="8dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/medicine_name"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            tools:text="Ibuprofen"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_today_done"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingLeft="16dp"
+            android:backgroundTint="@android:color/black"
+            android:src="@drawable/ic_done_black_24dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_today_snooze"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/iv_today_done"
+            android:backgroundTint="@android:color/darker_gray"
+            android:src="@drawable/ic_snooze_black_24dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_today_close"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="16dp"
+            android:paddingStart="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/iv_today_snooze"
+            android:backgroundTint="@android:color/darker_gray"
+            android:src="@drawable/ic_close_black_24dp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_time"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        tools:text="10:30 AM"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:id="@+id/dosage"
+        tools:text="1 * 100mg, circular, blue tablet"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:textSize="16sp"
+        android:id="@+id/notes"
+        tools:text="To be taken after food. Do not consume with tea"/>
+
+
+
+</LinearLayout>

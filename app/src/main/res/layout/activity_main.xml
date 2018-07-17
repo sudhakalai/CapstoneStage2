@@ -23,11 +23,11 @@
             app:title="@string/app_name"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/main_image"
+                android:src="@drawable/main_img"
                 android:scaleType="centerCrop"/>
 
             <android.support.v7.widget.Toolbar
@@ -41,29 +41,25 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-    <LinearLayout
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            style="@style/CategoryTab"
-            android:background="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <!-- Layout the different pages -->
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
+        <LinearLayout
+            android:id="@+id/fragment_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:orientation="vertical">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                style="@style/CategoryTab"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+            <!-- Layout the different pages -->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

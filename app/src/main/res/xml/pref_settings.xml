@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="REMINDERS" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:summaryOff="Off"
+        android:summaryOn="On"
+        android:title="Stock Reminder"
+        android:icon="@drawable/ic_notifications_black_24dp"/>
+
+    <PreferenceCategory
+        android:title="DATA AND ACCOUNT" />
+
+    <Preference
+        android:title="Backup"
+        android:icon="@drawable/ic_backup_black_24dp"/>
+    <Preference
+        android:title="Restore"
+        android:icon="@drawable/ic_restore_black_24dp"/>
+
+    <Preference
+        android:title="Delete all data"
+        android:icon="@drawable/ic_delete_sweep_black_24dp"/>
+
+
+</PreferenceScreen>

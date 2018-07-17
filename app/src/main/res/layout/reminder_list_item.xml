@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:elevation="8dp"
+    android:layout_margin="8dp"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminder_med"
+        tools:text="Ibuprofene"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_tv"
+        android:paddingTop="8dp"
+        android:textColor="@android:color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:text="26-07-2018 - 26-08-2018"
+        android:layout_below="@id/reminder_med"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remaining_stock"
+        android:paddingTop="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:text="10 pills left"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@id/date_tv"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_edit_black_24dp"/>
+
+</RelativeLayout>
