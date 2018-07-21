@@ -2,28 +2,33 @@ package com.example.android.medicinereminder.UI;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.medicinereminder.Adapters.ReminderAdapter;
-import com.example.android.medicinereminder.Model.Reminder;
+import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RemindersFragment extends Fragment {
+public class RemindersFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     RecyclerView mRecyclerView;
     FloatingActionButton fabReminder;
+    ReminderAdapter adapter;
+    private static final int REMINDER_LOADER = 0;
 
 
     public RemindersFragment() {
@@ -38,7 +43,9 @@ public class RemindersFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
 
         mRecyclerView = rootView.findViewById(R.id.rv_reminders);
-        fabReminder = rootView.findViewById(R.id.fab_reminder);
+
+        fabReminder = getActivity().findViewById(R.id.fab_reminder);
+        fabReminder.setVisibility(View.VISIBLE);
 
         fabReminder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,23 +55,47 @@ public class RemindersFragment extends Fragment {
             }
         });
 
-
-        ArrayList<Reminder> reminders = new ArrayList<>();
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        ReminderAdapter adapter = new ReminderAdapter(getContext(), reminders);
+        adapter = new ReminderAdapter(getContext(), null);
         mRecyclerView.setAdapter(adapter);
 
+        getLoaderManager().initLoader(REMINDER_LOADER, null, this);
 
         return rootView;
     }
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String [] projection = {
+                ReminderEntry._ID,
+                ReminderEntry.MEDICINE_NAME,
+                ReminderEntry.TYPE,
+                ReminderEntry.COLOR,
+                ReminderEntry.SHAPE,
+                ReminderEntry.STOCK,
+                ReminderEntry.DOSAGE,
+                ReminderEntry.MEASURE,
+                ReminderEntry.TIMESADAY,
+                ReminderEntry.NOTES,
+                ReminderEntry.FROM_DATE,
+                ReminderEntry.TO_DATE,
+                ReminderEntry.REMINDER_TIME};
+
+        return new CursorLoader(getContext(),ReminderEntry.CONTENT_URI, projection, null, null, null);
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.v("testtest",String.valueOf(data.getCount()));
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+    }
 }

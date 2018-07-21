@@ -1,56 +1,46 @@
 package com.example.android.medicinereminder.Adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
-
-import java.util.ArrayList;
 
 /**
  * This adapter populates the list items in the reminder fragment.
  */
 
-public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ReminderViewholder>{
+public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.ReminderViewholder>{
 
-    private ArrayList<Reminder> mReminders;
-    private Context mContext;
-
-    public ReminderAdapter(Context context, ArrayList<Reminder> reminders){
-        mContext = context;
-        mReminders = reminders;
+    public ReminderAdapter(Context context,Cursor cursor){
+        super(context,cursor);
     }
 
     @Override
     public ReminderViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.reminder_list_item,parent, false);
         return new ReminderViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(ReminderViewholder holder, int position) {
+    public void onBindViewHolder(ReminderViewholder viewHolder, Cursor cursor) {
+        String medName = cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME));
+        Log.v("testtest", medName);
+        long fromDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.FROM_DATE));
+        long toDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.TO_DATE));
+        String date = fromDate + " - " + toDate;
+        String stock = cursor.getInt(cursor.getColumnIndex(ReminderEntry.STOCK)) + "left";
 
-        holder.reminder = mReminders.get(position);
-        String name = holder.reminder.getMedicineName();
-        String date = holder.reminder.getFromDate()+ " - " + holder.reminder.getToDate();
-        String stock = String.valueOf(holder.reminder.getStock()) + " " + holder.reminder.getType() + " left";
-        holder.bind(name, date, stock);
-    }
-
-    @Override
-    public int getItemCount() {
-        if(mReminders != null){
-            return mReminders.size();
-        }else {
-            return 0;
-        }
+        viewHolder.bind(medName, date, stock);
     }
 
     public static class ReminderViewholder extends RecyclerView.ViewHolder{

@@ -2,6 +2,7 @@ package com.example.android.medicinereminder.UI;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,8 @@ public class HistoryFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_history, container, false);
 
         mRecyclerView = rootview.findViewById(R.id.rv_history);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_reminder);
+        fab.setVisibility(View.INVISIBLE);
 
         ArrayList<Reminder> reminders = new ArrayList<>();
         reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));

@@ -2,6 +2,7 @@ package com.example.android.medicinereminder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,12 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.android.medicinereminder.Adapters.CategoryTabAdapter;
+import com.example.android.medicinereminder.Database.ReminderDbHelper;
 import com.example.android.medicinereminder.UI.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    public FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+
+        ReminderDbHelper dbHelper = new ReminderDbHelper(this);
+        dbHelper.getWritableDatabase();
+
+        floatingActionButton = findViewById(R.id.fab_reminder);
 
         viewPager = findViewById(R.id.viewpager);
         tabLayout = findViewById(R.id.tabs);
