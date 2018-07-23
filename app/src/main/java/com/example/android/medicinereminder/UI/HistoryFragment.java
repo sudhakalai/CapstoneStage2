@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.medicinereminder.Adapters.HistoryAdapter;
-import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,18 +36,12 @@ public class HistoryFragment extends Fragment {
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_reminder);
         fab.setVisibility(View.INVISIBLE);
 
-        ArrayList<Reminder> reminders = new ArrayList<>();
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
-        reminders.add(new Reminder("Ibuprofene", "Capsule", 100, "mg", 1, "White and Red", "oblong", new int[]{1230, 230}, 1021987, 2021987,10,"to be taken after food",0));
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        HistoryAdapter adapter = new HistoryAdapter(getContext(), reminders);
+        HistoryAdapter adapter = new HistoryAdapter(getContext(), null);
         mRecyclerView.setAdapter(adapter);
 
         return rootview;

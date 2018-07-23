@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
+import com.example.android.medicinereminder.Util.FromintegerUtils;
+import com.example.android.medicinereminder.Util.ReminderUtils;
 
 /**
  * This adapter populates the list items in the reminder fragment.
@@ -19,8 +21,11 @@ import com.example.android.medicinereminder.R;
 
 public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.ReminderViewholder>{
 
+    Context mContext;
+
     public ReminderAdapter(Context context,Cursor cursor){
         super(context,cursor);
+        mContext = context;
     }
 
     @Override
@@ -37,8 +42,8 @@ public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.Remin
         Log.v("testtest", medName);
         long fromDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.FROM_DATE));
         long toDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.TO_DATE));
-        String date = fromDate + " - " + toDate;
-        String stock = cursor.getInt(cursor.getColumnIndex(ReminderEntry.STOCK)) + "left";
+        String date = ReminderUtils.getDateString(fromDate) + " to " + ReminderUtils.getDateString(toDate);
+        String stock = cursor.getInt(cursor.getColumnIndex(ReminderEntry.STOCK)) + " " + FromintegerUtils.getMedicineTypeString(cursor.getInt(cursor.getColumnIndex(ReminderEntry.TYPE)), mContext) + " left";
 
         viewHolder.bind(medName, date, stock);
     }

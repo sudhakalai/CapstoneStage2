@@ -3,10 +3,12 @@ package com.example.android.medicinereminder.UI;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -47,7 +49,7 @@ public class TimeActivity extends AppCompatActivity {
     String medNotes;
     static long medFromDate;
     static long medToDate;
-    static String [] medReminders;
+    static long [] medReminders;
     ImageView fromPicker;
     static TextView fromDate;
     ImageView toPicker;
@@ -66,6 +68,7 @@ public class TimeActivity extends AppCompatActivity {
     private TimePickerFragment mTimePickerFragment;
     private int reminderTimesFlag = 5;
     private static Context context;
+    private boolean insertionFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class TimeActivity extends AppCompatActivity {
         fifthTv = findViewById(R.id.fifth_reminder);
         mDatePickerFragment = new DatePickerFragment();
         mTimePickerFragment = new TimePickerFragment();
-        medReminders = new String[5];
+        medReminders = new long[5];
         context = this;
 
 
@@ -223,7 +226,6 @@ public class TimeActivity extends AppCompatActivity {
             case R.id.action_save:
                 if(validateInput()){
                     new InsertReminderAsyncTask().execute();
-                    Toast.makeText(context, "Reminder saved!!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }else {
@@ -324,44 +326,44 @@ public class TimeActivity extends AppCompatActivity {
 
             if (flag == FLAG_FIRST_REMINDER) {
                 reminderOne = calendar.getTimeInMillis();
-                medReminders[0] = "";
+                medReminders[0] = 0;
                 firstTv.setText(format.format(calendar.getTime()));
-                medReminders[0] = String.valueOf(reminderOne);
+                medReminders[0] = reminderOne;
             } else if (flag == FLAG_SECOND_REMINDER) {
                 reminderTwo = calendar.getTimeInMillis();
                 if(reminderTwo <= reminderOne){
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
-                    medReminders[1] = "";
+                    medReminders[1] = 0;
                     secondTv.setText(format.format(calendar.getTime()));
-                    medReminders[1] = String.valueOf(reminderTwo);
+                    medReminders[1] = reminderTwo;
                 }
             }else if (flag == FLAG_THIRD_REMINDER) {
                 reminderThree = calendar.getTimeInMillis();
                 if(reminderThree <= reminderTwo){
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
-                    medReminders[2] = "";
+                    medReminders[2] = 0;
                     thirdTv.setText(format.format(calendar.getTime()));
-                    medReminders[2] = String.valueOf(reminderThree);
+                    medReminders[2] = reminderThree;
                 }
             }else if (flag == FLAG_FOURTH_REMINDER) {
                 reminderFour = calendar.getTimeInMillis();
                 if(reminderFour <= reminderThree){
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
-                    medReminders[3] = "";
+                    medReminders[3] = 0;
                     fourthTv.setText(format.format(calendar.getTime()));
-                    medReminders[3] = String.valueOf(reminderFour);
+                    medReminders[3] = reminderFour;
                 }
             }else if (flag == FLAG_FIFTH_REMINDER) {
                 reminderFive = calendar.getTimeInMillis();
                 if(reminderFive <= reminderFour){
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
-                    medReminders[4] = "";
+                    medReminders[4] = 0;
                     fifthTv.setText(format.format(calendar.getTime()));
-                    medReminders[4] = String.valueOf(reminderFive);
+                    medReminders[4] = reminderFive;
                 }
             }
         }
@@ -372,8 +374,13 @@ public class TimeActivity extends AppCompatActivity {
 
         Context context = getBaseContext();
 
-        @Override
+       @Override
         protected Void doInBackground(Void... voids) {
+
+            Cursor cursor = getContentResolver().query(ReminderEntry.CONTENT_URI,null, null, null,null);
+
+            int reminderId = cursor.getCount() + 1;
+
             ContentValues contentValues = new ContentValues();
             contentValues.put(ReminderEntry.MEDICINE_NAME, medName);
             contentValues.put(ReminderEntry.TYPE, medType);
@@ -386,15 +393,62 @@ public class TimeActivity extends AppCompatActivity {
             contentValues.put(ReminderEntry.NOTES, medNotes);
             contentValues.put(ReminderEntry.FROM_DATE, medFromDate);
             contentValues.put(ReminderEntry.TO_DATE, medToDate);
-            contentValues.put(ReminderEntry.REMINDER_TIME, medReminders.toString());
+            contentValues.put(ReminderEntry.REMINDER_ID, reminderId);
 
             getContentResolver().insert(ReminderEntry.CONTENT_URI, contentValues);
 
-            Cursor cursor = getContentResolver().query(ReminderEntry.CONTENT_URI,null, null, null,null);
+            Cursor reminderCursor = getContentResolver().query(ReminderEntry.CONTENT_URI, null, null, null, null);
 
-            Log.v("testtest", String.valueOf(cursor.getCount()));
+            ContentValues values = new ContentValues();
+            values.put(ReminderEntry.REMINDER_ONE, medReminders[0]);
+            Log.v("testtest", String.valueOf(medReminders[0]));
+            if(reminderTimesFlag == 2){
+                values.put(ReminderEntry.REMINDER_TWO, medReminders[1]);
+            }else if(reminderTimesFlag == 3){
+                values.put(ReminderEntry.REMINDER_TWO, medReminders[1]);
+                values.put(ReminderEntry.REMINDER_THREE,medReminders[2]);
+            }else if(reminderTimesFlag == 4){
+                values.put(ReminderEntry.REMINDER_TWO, medReminders[1]);
+                values.put(ReminderEntry.REMINDER_THREE,medReminders[2]);
+                values.put(ReminderEntry.REMINDER_FOUR, medReminders[3]);
+            }else if(reminderTimesFlag == 5){
+                values.put(ReminderEntry.REMINDER_TWO, medReminders[1]);
+                values.put(ReminderEntry.REMINDER_THREE,medReminders[2]);
+                values.put(ReminderEntry.REMINDER_FOUR, medReminders[3]);
+                values.put(ReminderEntry.REMINDER_FIVE, medReminders[4]);
+            }
+            values.put(ReminderEntry.REMINDER_TIME_ID, reminderId);
+
+            getContentResolver().insert(ReminderEntry.CONTENT_URI_TIME, values);
+
+            Cursor timeCursor = getContentResolver().query(ReminderEntry.CONTENT_URI_TIME,null, null, null, null);
+
+            if(reminderCursor.getCount() == timeCursor.getCount()){
+                insertionFlag = true;
+            }else if(reminderCursor.getCount() > timeCursor.getCount()){
+                Uri uri = ContentUris.withAppendedId(ReminderEntry.CONTENT_URI, reminderCursor.getCount() - 1);
+                getContentResolver().delete(uri, null, null );
+                insertionFlag = false;
+            }else if(reminderCursor.getCount() < timeCursor.getCount()){
+                Uri uri = ContentUris.withAppendedId(ReminderEntry.CONTENT_URI_TIME, timeCursor.getCount() - 1);
+                getContentResolver().delete(uri, null, null);
+                insertionFlag = false;
+            }
+
+           Log.v("testcursor", reminderCursor.getCount() + "=" + timeCursor.getCount());
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            if(insertionFlag){
+                Toast.makeText(context, "Reminder added!!!", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(context, "Failed to add Reminder!!!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -81,8 +81,7 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
                 ReminderEntry.TIMESADAY,
                 ReminderEntry.NOTES,
                 ReminderEntry.FROM_DATE,
-                ReminderEntry.TO_DATE,
-                ReminderEntry.REMINDER_TIME};
+                ReminderEntry.TO_DATE};
 
         return new CursorLoader(getContext(),ReminderEntry.CONTENT_URI, projection, null, null, null);
 

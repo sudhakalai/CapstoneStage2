@@ -25,6 +25,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
 
         String SQL_CREATE_REMINDER_TABLE = "CREATE TABLE " + ReminderEntry.TABLE_NAME + "("
                 + ReminderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ReminderEntry.REMINDER_ID + " INTEGER NOT NULL, "
                 + ReminderEntry.MEDICINE_NAME + " TEXT NOT NULL, "
                 + ReminderEntry.TYPE + " INTEGER NOT NULL, "
                 + ReminderEntry.COLOR + " INTEGER NOT NULL, "
@@ -35,13 +36,25 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
                 + ReminderEntry.TIMESADAY + " INTEGER NOT NULL, "
                 + ReminderEntry.NOTES + " TEXT, "
                 + ReminderEntry.FROM_DATE + " INTEGER NOT NULL, "
-                + ReminderEntry.TO_DATE + " INTEGER NOT NULL, "
-                + ReminderEntry.REMINDER_TIME + " TEXT NOT NULL );";
+                + ReminderEntry.TO_DATE + " INTEGER NOT NULL );";
+
+        String SQL_CREATE_REMINDER_TIME_TABLE = "CREATE TABLE " + ReminderEntry.TIME_TABLE_NAME + "("
+                + ReminderEntry.TIME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ReminderEntry.REMINDER_ONE + " INTEGER NOT NULL, "
+                + ReminderEntry.REMINDER_TWO + " INTEGER, "
+                + ReminderEntry.REMINDER_THREE + " INTEGER, "
+                + ReminderEntry.REMINDER_FOUR + " INTEGER, "
+                + ReminderEntry.REMINDER_FIVE + " INTEGER, "
+                + ReminderEntry.REMINDER_TIME_ID + " INTEGER, "
+                + " FOREIGN KEY ("+ReminderEntry.REMINDER_TIME_ID+") REFERENCES "+ReminderEntry.TABLE_NAME+"("+ReminderEntry.REMINDER_ID+"));";
+
 
 
         db.execSQL(SQL_CREATE_REMINDER_TABLE);
+        db.execSQL(SQL_CREATE_REMINDER_TIME_TABLE);
 
         Log.v("databasequery", SQL_CREATE_REMINDER_TABLE);
+        Log.v("databasequery", SQL_CREATE_REMINDER_TIME_TABLE);
 
     }
 

@@ -38,9 +38,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     @Override
     public void onBindViewHolder(HistoryViewholder holder, int position) {
         holder.reminder = mReminders.get(position);
-        String time = String.valueOf(holder.reminder.getTimes()[0]);
+        String time = String.valueOf(holder.reminder.getReminderTime());
         String name = holder.reminder.getMedicineName();
-        String dosage = ", "+ holder.reminder.getQuantity()+ " * "+ holder.reminder.getDosage() + "mg";
+        String dosage = ", "+  holder.reminder.getDosage() + "mg";
 
         holder.bind(name, time, dosage);
     }

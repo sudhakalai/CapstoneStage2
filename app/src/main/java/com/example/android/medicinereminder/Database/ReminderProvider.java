@@ -22,12 +22,16 @@ public class ReminderProvider extends ContentProvider{
     private ReminderDbHelper mDbHelper;
     private static final int REMINDER_ID = 100;
     private static final int REMINDERS = 101;
+    private static final int TIMES = 102;
+    private static final int TIME_ID = 103;
     private static final String LOG_TAG = ReminderProvider.class.getSimpleName();
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(ReminderContract.CONTENT_AUTHORITY, ReminderContract.PATH_REMINDER, REMINDERS);
         sUriMatcher.addURI(ReminderContract.CONTENT_AUTHORITY, ReminderContract.PATH_REMINDER+ "/#", REMINDER_ID);
+        sUriMatcher.addURI(ReminderContract.CONTENT_AUTHORITY, ReminderContract.PATH_TIME, TIMES);
+        sUriMatcher.addURI(ReminderContract.CONTENT_AUTHORITY, ReminderContract.PATH_TIME+ "/#", TIME_ID);
     }
 
 
@@ -56,6 +60,14 @@ public class ReminderProvider extends ContentProvider{
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(ReminderEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
+            case TIMES:
+                cursor = db.query(ReminderEntry.TIME_TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+                break;
+            case TIME_ID:
+                selection = ReminderEntry.TIME_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                cursor = db.query(ReminderEntry.TIME_TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+                break;
             default:
                 throw new IllegalArgumentException("Cannot query unknown uri" + uri);
         }
@@ -75,10 +87,22 @@ public class ReminderProvider extends ContentProvider{
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
 
         int match = sUriMatcher.match(uri);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        long id;
         switch (match){
             case REMINDERS:
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                long id = db.insert(ReminderEntry.TABLE_NAME, null, values);
+                id = db.insert(ReminderEntry.TABLE_NAME, null, values);
+
+                if (id == -1) {
+                    Log.e(LOG_TAG, "Failed to insert row for " + uri);
+                    return null;
+                }
+
+                getContext().getContentResolver().notifyChange(uri, null);
+
+                return ContentUris.withAppendedId(uri, id);
+            case TIMES:
+                id = db.insert(ReminderEntry.TIME_TABLE_NAME, null, values);
 
                 if (id == -1) {
                     Log.e(LOG_TAG, "Failed to insert row for " + uri);
@@ -111,6 +135,14 @@ public class ReminderProvider extends ContentProvider{
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = db.delete(ReminderEntry.TABLE_NAME, selection, selectionArgs);
                 break;
+            case TIMES:
+                rowsDeleted = db.delete(ReminderEntry.TIME_TABLE_NAME, selection, selectionArgs);
+                break;
+            case TIME_ID:
+                selection = ReminderEntry.TIME_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                rowsDeleted = db.delete(ReminderEntry.TIME_TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
 
@@ -133,6 +165,12 @@ public class ReminderProvider extends ContentProvider{
                 selection = ReminderEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateReminder(uri, values, selection, selectionArgs);
+            case TIMES:
+                return updateReminderTime(uri, values, selection, selectionArgs);
+            case TIME_ID:
+                selection = ReminderEntry.TIME_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateReminderTime(uri, values, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
 
@@ -146,6 +184,21 @@ public class ReminderProvider extends ContentProvider{
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         rowsUpdated = db.update(ReminderEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
+
+    }
+
+    private int updateReminderTime(Uri uri, ContentValues values, String selection, String[] selectionArgs){
+
+        int rowsUpdated;
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        rowsUpdated = db.update(ReminderEntry.TIME_TABLE_NAME, values, selection, selectionArgs);
 
         if (rowsUpdated != 0) {
             getContext().getContentResolver().notifyChange(uri, null);

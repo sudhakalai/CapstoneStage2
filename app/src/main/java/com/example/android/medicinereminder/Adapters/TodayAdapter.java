@@ -38,13 +38,12 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewhol
     public void onBindViewHolder(TodayViewholder holder, int position) {
 
         holder.reminder = mReminders.get(position);
-        String time = String.valueOf(holder.reminder.getTimes()[0]);
+        String time = String.valueOf(holder.reminder.getReminderTime());
         String name = holder.reminder.getMedicineName();
         String dosage = String.valueOf(holder.reminder.getDosage());
-        String quantity = String.valueOf(holder.reminder.getQuantity());
         String color = holder.reminder.getMedicineColor();
         String shape = holder.reminder.getShape();
-        String medicineDosage = quantity + " * " + dosage + "mg, "+ shape + ", " + color + " tablet";
+        String medicineDosage =dosage + "mg, "+ shape + ", " + color + " tablet";
         String notes = holder.reminder.getNotes();
 
         holder.bind(name, time, medicineDosage, notes);
@@ -57,6 +56,11 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewhol
         }else {
             return 0;
         }
+    }
+
+    public void setReminderList(ArrayList<Reminder> list){
+        this.mReminders = list;
+        notifyDataSetChanged();
     }
 
     public static class TodayViewholder extends RecyclerView.ViewHolder{

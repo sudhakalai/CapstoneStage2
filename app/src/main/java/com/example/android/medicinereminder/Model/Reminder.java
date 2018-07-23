@@ -1,5 +1,7 @@
 package com.example.android.medicinereminder.Model;
 
+import android.content.Context;
+
 /**
  * This is the Object class
  */
@@ -10,43 +12,36 @@ public class Reminder {
     private String mType;
     private int mDosage;
     private String mMeasure;
-    private int mQuantity;
     private String mMedicineColor;
     private String mShape;
-    private int[] mTimes;
-    private int mFromDate;
-    private int mToDate;
+    private long mReminderDate;
     private int mStock;
     private String mNotes;
-    private int mState;
+    private long mReminderTime;
+    Context mContext;
 
-    public Reminder(String medicineName, String type, int dosage, String measure, int quantity, String medicineColor, String shape, int[] times, int fromDate, int toDate, int stock, String notes, int state){
+    public Reminder(String medicineName, String type, int dosage, String measure, String medicineColor, String shape,long reminderDate, int stock, String notes, long reminderTime){
         mMedicineName = medicineName;
         mType =type;
         mDosage = dosage;
         mMeasure = measure;
-        mQuantity = quantity;
         mMedicineColor = medicineColor;
         mShape = shape;
-        mTimes = times;
-        mFromDate= fromDate;
-        mToDate = toDate;
+        mReminderDate = reminderDate;
         mStock = stock;
         mNotes = notes;
-        mState = state;
+        mReminderTime = reminderTime;
     }
 
     public String getMedicineName() { return mMedicineName; }
     public String getType() { return mType; }
     public int getDosage() { return mDosage; }
     public String getMeasure() { return mMeasure; }
-    public int getQuantity() { return mQuantity; }
     public String getMedicineColor() { return mMedicineColor; }
     public String getShape() { return mShape; }
-    public int[] getTimes() { return mTimes; }
-    public int getFromDate() { return mFromDate; }
-    public int getToDate() { return mToDate; }
+    public long getReminderDate() { return mReminderDate; }
     public int getStock() { return mStock; }
     public String getNotes() { return mNotes; }
-    public int getState() { return mState; }
+    public long getReminderTime(){ return mReminderTime; }
+
 }
