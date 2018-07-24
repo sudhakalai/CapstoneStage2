@@ -71,5 +71,6 @@ public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.Remin
             dateTv.setText(date);
             stockTv.setText(stock);
         }
+
     }
 }

@@ -326,6 +326,7 @@ public class TimeActivity extends AppCompatActivity {
 
             if (flag == FLAG_FIRST_REMINDER) {
                 reminderOne = calendar.getTimeInMillis();
+                Log.v("testreminder", String.valueOf(reminderOne));
                 medReminders[0] = 0;
                 firstTv.setText(format.format(calendar.getTime()));
                 medReminders[0] = reminderOne;

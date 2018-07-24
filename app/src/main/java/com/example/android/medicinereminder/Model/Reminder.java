@@ -2,6 +2,11 @@ package com.example.android.medicinereminder.Model;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 /**
  * This is the Object class
  */
@@ -43,5 +48,21 @@ public class Reminder {
     public int getStock() { return mStock; }
     public String getNotes() { return mNotes; }
     public long getReminderTime(){ return mReminderTime; }
+    public void setReminderTime(long reminderTime){ mReminderTime = reminderTime;}
+
+    public static String toBaseString(Reminder reminder) {
+        Gson gson = new Gson();
+        return gson.toJson(reminder);
+    }
+
+    public static Reminder fromBaseString(String encoded) {
+        if (!"".equals(encoded)) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<Reminder>() {}.getType();
+            return gson.fromJson(encoded, type);
+
+        }
+        return null;
+    }
 
 }

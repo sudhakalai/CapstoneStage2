@@ -2,6 +2,7 @@ package com.example.android.medicinereminder.UI;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,7 @@ public class ReminderActivity extends AppCompatActivity {
     Spinner timesADay;
     EditText notesET;
     Context context;
+    private Uri mCurrentReminderUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,16 @@ public class ReminderActivity extends AppCompatActivity {
         timesADay = findViewById(R.id.spinner_times_a_day);
         notesET = findViewById(R.id.notes_et);
         context = this;
+
+        Intent intent = getIntent();
+        mCurrentReminderUri = intent.getData();
+
+        if(mCurrentReminderUri == null){
+            setTitle("Add Reminder");
+        }else{
+            setTitle("Edit Reminder");
+
+        }
 
     }
 

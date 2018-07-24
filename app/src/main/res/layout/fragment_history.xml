@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f6f6f6"
-    android:paddingBottom="16dp"
+    android:paddingBottom="64dp"
     tools:context="com.example.android.medicinereminder.UI.HistoryFragment">
 
     <LinearLayout

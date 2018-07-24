@@ -18,12 +18,22 @@
         </activity>
         <activity android:name=".UI.ReminderActivity" />
         <activity android:name=".UI.TimeActivity" />
-        <activity android:name=".UI.SettingsActivity"></activity>
+        <activity android:name=".UI.SettingsActivity" />
 
         <provider
             android:name=".Database.ReminderProvider"
             android:authorities="com.example.android.medicinereminder"
             android:exported="false" />
+
+        <receiver android:name=".Widget.ReminderWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recipe_widget_provider_info" />
+        </receiver>
     </application>
 
 </manifest>

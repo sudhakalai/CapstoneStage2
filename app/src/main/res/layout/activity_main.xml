@@ -62,10 +62,21 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="32dp"
         android:id="@+id/fab_reminder"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_gravity="end|bottom"
         android:tint="@android:color/white" />
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        ads:adSize="BANNER"
+        android:layout_gravity="end|bottom"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
 </android.support.design.widget.CoordinatorLayout>

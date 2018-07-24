@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -38,12 +39,13 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewhol
     public void onBindViewHolder(TodayViewholder holder, int position) {
 
         holder.reminder = mReminders.get(position);
-        String time = String.valueOf(holder.reminder.getReminderTime());
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+        String time = format.format(holder.reminder.getReminderTime());
         String name = holder.reminder.getMedicineName();
         String dosage = String.valueOf(holder.reminder.getDosage());
         String color = holder.reminder.getMedicineColor();
         String shape = holder.reminder.getShape();
-        String medicineDosage =dosage + "mg, "+ shape + ", " + color + " tablet";
+        String medicineDosage =dosage + " "+ holder.reminder.getMeasure()+ ", "+ shape + ", " + color + " "+ holder.reminder.getType();
         String notes = holder.reminder.getNotes();
 
         holder.bind(name, time, medicineDosage, notes);

@@ -1,20 +1,29 @@
 package com.example.android.medicinereminder.UI;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.android.medicinereminder.Adapters.TodayAdapter;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
+import com.example.android.medicinereminder.MainActivity;
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.FromintegerUtils;
@@ -30,10 +39,10 @@ import java.util.Date;
  */
 public class TodayFragment extends Fragment {
 
+    private static final String CHANNEL_ID ="Medicine Notification" ;
     private RecyclerView mRecyclerView;
     private Context mContext;
     TodayAdapter adapter;
-    int REMINDER_LIST_LOADER = 200;
 
 
     public TodayFragment() {
@@ -59,10 +68,32 @@ public class TodayFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        adapter = new TodayAdapter(getContext(), getTodayReminders(getReminderArrayList()));
+        adapter = new TodayAdapter(getContext(), getRemindersSorted(getTodayReminders(getReminderArrayList())));
         mRecyclerView.setAdapter(adapter);
 
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
 
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle("Medicine Reminder")
+                .setContentText("Take Crocin")
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        Button button = rootview.findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+
+// notificationId is a unique int for each notification that you must define
+                notificationManager.notify(1, mBuilder.build());
+            }
+        });
 
         return rootview;
     }
@@ -138,7 +169,9 @@ public class TodayFragment extends Fragment {
     }
 
     public ArrayList<Reminder> getTodayReminders(ArrayList<Reminder> reminders){
+
         ArrayList<Reminder> todayReminders = new ArrayList<>();
+
         Collections.sort(reminders, (o1, o2) -> Long.compare(o1.getReminderDate(), o2.getReminderDate()));
 
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -151,7 +184,8 @@ public class TodayFragment extends Fragment {
                     todayReminders.add(reminders.get(i));
                 }
             }
-            return todayReminders;
+            Log.v("testRe", String.valueOf(todayReminders.size()));
+          return todayReminders;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -160,5 +194,41 @@ public class TodayFragment extends Fragment {
 
     }
 
+    public ArrayList<Reminder> getRemindersSorted(ArrayList<Reminder> reminders){
+        for(int i = 0; i<reminders.size(); i++){
+           long time = reminders.get(i).getReminderTime();
+           SimpleDateFormat format = new SimpleDateFormat("HH::mm");
+           String stringTime = format.format(time);
+            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+            String date = format1.format(System.currentTimeMillis());
+            try {
+                Date today = format1.parse(date);
+                long todayMilliseconds = today.getTime();
+                Date reminderTime = format.parse(stringTime);
+                long todayTime = todayMilliseconds + reminderTime.getTime();
+                reminders.get(i).setReminderTime(todayTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(reminders, (o1, o2) -> Long.compare(o1.getReminderTime(), o2.getReminderTime()));
+        Log.v("testRe", String.valueOf(reminders.size()));
+        return reminders;
+    }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Medicine Reminder";
+            String description = "Reminds to take medicine";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }
