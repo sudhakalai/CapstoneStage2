@@ -1,18 +1,11 @@
 package com.example.android.medicinereminder.UI;
 
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,8 +16,8 @@ import android.widget.Button;
 
 import com.example.android.medicinereminder.Adapters.TodayAdapter;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
-import com.example.android.medicinereminder.MainActivity;
 import com.example.android.medicinereminder.Model.Reminder;
+import com.example.android.medicinereminder.Notifications.NotificationUtils;
 import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.FromintegerUtils;
 
@@ -68,30 +61,16 @@ public class TodayFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        adapter = new TodayAdapter(getContext(), getRemindersSorted(getTodayReminders(getReminderArrayList())));
+        ArrayList<Reminder> reminderForToday = getRemindersSorted(getTodayReminders(getReminderArrayList()));
+        adapter = new TodayAdapter(getContext(), reminderForToday);
         mRecyclerView.setAdapter(adapter);
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, 0);
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
-                .setContentTitle("Medicine Reminder")
-                .setContentText("Take Crocin")
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true);
 
         Button button = rootview.findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-
-// notificationId is a unique int for each notification that you must define
-                notificationManager.notify(1, mBuilder.build());
+                NotificationUtils.reminderUser(getContext(),"Take "+ reminderForToday.get(0).getMedicineName());
             }
         });
 
@@ -216,19 +195,5 @@ public class TodayFragment extends Fragment {
         return reminders;
     }
 
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Medicine Reminder";
-            String description = "Reminds to take medicine";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+
 }
