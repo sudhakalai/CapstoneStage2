@@ -2,6 +2,7 @@ package com.example.android.medicinereminder.UI;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -114,6 +115,16 @@ public class TodayFragment extends Fragment {
                 @Override
                 protected void onBindViewHolder(@NonNull TodayReminderHolder holder, int position, @NonNull Reminder model) {
                     holder.bind(model);
+                    holder.setOnClickListener(new TodayReminderHolder.ClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(getContext(), PopActivity.class);
+                            String key = getRef(position).getKey();
+                            intent.putExtra("reminderKey", key);
+                            startActivity(intent);
+
+                        }
+                    });
                 }
 
                 @NonNull

@@ -49,8 +49,6 @@
         android:paddingLeft="8dp"
         android:paddingStart="8dp"
         android:paddingRight="8dp"
-        android:paddingEnd="8dp"
-        android:src="@drawable/ic_done_white"
-        android:tint="@android:color/darker_gray"/>
+        android:paddingEnd="8dp" />
 
 </RelativeLayout>
