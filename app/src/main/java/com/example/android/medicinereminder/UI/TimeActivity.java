@@ -30,11 +30,21 @@ import android.widget.Toast;
 
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.MainActivity;
+import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
+import com.example.android.medicinereminder.Util.FromintegerUtils;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TimeActivity extends AppCompatActivity {
 
@@ -50,30 +60,38 @@ public class TimeActivity extends AppCompatActivity {
     static long medFromDate;
     static long medToDate;
     static long [] medReminders;
-    ImageView fromPicker;
+    @BindView(R.id.reminder_one) RelativeLayout reminderOne;
+    @BindView(R.id.reminder_two) RelativeLayout reminderTwo;
+    @BindView(R.id.reminder_three) RelativeLayout reminderThree;
+    @BindView(R.id.reminder_four) RelativeLayout reminderFour;
+    @BindView(R.id.reminder_five) RelativeLayout reminderFive;
+    @BindView(R.id.from_date_picker) ImageView fromPicker;
     static TextView fromDate;
-    ImageView toPicker;
+    @BindView(R.id.to_date_picker) ImageView toPicker;
     static TextView toDate;
-    ImageView firstReminder;
+    @BindView(R.id.first_button) ImageView firstReminder;
     static TextView firstTv;
-    ImageView secondReminder;
+    @BindView(R.id.second_button) ImageView secondReminder;
     static TextView secondTv;
-    ImageView thirdReminder;
+    @BindView(R.id.third_button) ImageView thirdReminder;
     static TextView thirdTv;
-    ImageView fourthReminder;
-    static TextView fourthTv;
-    ImageView fifthReminder;
+    @BindView(R.id.fourth_button) ImageView fourthReminder;
+    static  TextView fourthTv;
+    @BindView(R.id.fifth_button) ImageView fifthReminder;
     static TextView fifthTv;
     private DatePickerFragment mDatePickerFragment;
     private TimePickerFragment mTimePickerFragment;
     private int reminderTimesFlag = 5;
     private static Context context;
     private boolean insertionFlag;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mRemindersDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
+        ButterKnife.bind(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -81,29 +99,23 @@ public class TimeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reminder);
         setSupportActionBar(toolbar);
 
-        RelativeLayout reminderOne = findViewById( R.id.reminder_one);
-        RelativeLayout reminderTwo = findViewById( R.id.reminder_two);
-        RelativeLayout reminderThree = findViewById( R.id.reminder_three);
-        RelativeLayout reminderFour = findViewById( R.id.reminder_four);
-        RelativeLayout reminderFive = findViewById( R.id.reminder_five);
+
         fromPicker = findViewById(R.id.from_date_picker);
         fromDate = findViewById(R.id.from_date);
-        toPicker = findViewById(R.id.to_date_picker);
         toDate = findViewById(R.id.to_date);
-        firstReminder = findViewById(R.id.first_button);
         firstTv = findViewById(R.id.first_reminder);
-        secondReminder = findViewById(R.id.second_button);
         secondTv = findViewById(R.id.second_reminder);
-        thirdReminder = findViewById(R.id.third_button);
         thirdTv = findViewById(R.id.third_reminder);
-        fourthReminder = findViewById(R.id.fourth_button);
         fourthTv = findViewById(R.id.fourth_reminder);
-        fifthReminder = findViewById(R.id.fifth_button);
         fifthTv = findViewById(R.id.fifth_reminder);
         mDatePickerFragment = new DatePickerFragment();
         mTimePickerFragment = new TimePickerFragment();
         medReminders = new long[5];
         context = this;
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRemindersDatabaseReference = mFirebaseDatabase.getReference().child("reminders");
+
 
 
         Bundle extras = getIntent().getExtras();
@@ -436,7 +448,12 @@ public class TimeActivity extends AppCompatActivity {
                 insertionFlag = false;
             }
 
+            if(insertionFlag == true){
+                createReminder(medName,medType, medDosage,medMeasure,medColor,medShape,medFromDate,medToDate, medNotes, medReminders);
+            }
+
            Log.v("testcursor", reminderCursor.getCount() + "=" + timeCursor.getCount());
+
 
             return null;
         }
@@ -494,4 +511,58 @@ public class TimeActivity extends AppCompatActivity {
         }
         return flag;
     }
+
+    public void createReminder(String medName, int medType, int dosage, int measure, int color, int shape, long fromDate,long toDate, String notes, long[] reminders){
+        ArrayList<Reminder> reminderList = new ArrayList<>();
+        long from = getTrueDate(fromDate);
+        long to = getTrueDate(toDate);
+        for(long k= from; k<= to; k=k+86400000){
+            for(int i=0; i<5; i++){
+                if(reminders[i] != 0){
+                    reminderList.add(new Reminder(
+                            medName,
+                            FromintegerUtils.getMedicineTypeString(medType, context),
+                            dosage,
+                            FromintegerUtils.getMedicineMeasureString(measure, context),
+                            FromintegerUtils.getMedicineColorString(color, context),
+                            FromintegerUtils.getMedicineShapeString(shape, context),
+                            k,
+                            notes,
+                            k+getTrueTime(reminders[i]),
+                            1
+                    ));
+                }
+            }
+
+        }
+
+        for(int j=0; j<reminderList.size(); j++){
+            mRemindersDatabaseReference.push().setValue(reminderList.get(j));
+        }
+    }
+
+    public long getTrueDate(long date){
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        String trueDateString = format.format(date);
+        try {
+            Date trueDate = format.parse(trueDateString);
+            return trueDate.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public long getTrueTime(long time){
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String trueTimeString = format.format(time);
+        try {
+            Date trueTime = format.parse(trueTimeString);
+            return trueTime.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

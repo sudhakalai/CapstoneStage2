@@ -17,17 +17,20 @@ import android.widget.Toast;
 import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.ToIntegerUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ReminderActivity extends AppCompatActivity {
 
-    EditText medicineNameET;
-    Spinner medicineType;
-    Spinner medicineColor;
-    Spinner medicineShape;
-    EditText stockET;
-    EditText dosageET;
-    Spinner measure;
-    Spinner timesADay;
-    EditText notesET;
+    @BindView(R.id.med_name_text) EditText medicineNameET;
+    @BindView(R.id.type_spinner) Spinner medicineType;
+    @BindView(R.id.color_spinner) Spinner medicineColor;
+    @BindView(R.id.shape_spinner) Spinner medicineShape;
+    @BindView(R.id.stock_text) EditText stockET;
+    @BindView(R.id.dosage_text) EditText dosageET;
+    @BindView(R.id.spinner_dosage) Spinner measure;
+    @BindView(R.id.spinner_times_a_day) Spinner timesADay;
+    @BindView(R.id.notes_et) EditText notesET;
     Context context;
     private Uri mCurrentReminderUri;
 
@@ -35,6 +38,7 @@ public class ReminderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
+        ButterKnife.bind(this);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -47,15 +51,6 @@ public class ReminderActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        medicineNameET = findViewById(R.id.med_name_text);
-        medicineType = findViewById(R.id.type_spinner);
-        medicineColor = findViewById(R.id.color_spinner);
-        medicineShape = findViewById(R.id.shape_spinner);
-        stockET = findViewById(R.id.stock_text);
-        dosageET = findViewById(R.id.dosage_text);
-        measure = findViewById(R.id.spinner_dosage);
-        timesADay = findViewById(R.id.spinner_times_a_day);
-        notesET = findViewById(R.id.notes_et);
         context = this;
 
         Intent intent = getIntent();

@@ -1,7 +1,5 @@
 package com.example.android.medicinereminder.Model;
 
-import android.content.Context;
-
 /**
  * This is the Object class
  */
@@ -15,12 +13,11 @@ public class Reminder {
     private String mMedicineColor;
     private String mShape;
     private long mReminderDate;
-    private int mStock;
     private String mNotes;
     private long mReminderTime;
-    Context mContext;
+    private int mState;
 
-    public Reminder(String medicineName, String type, int dosage, String measure, String medicineColor, String shape,long reminderDate, int stock, String notes, long reminderTime){
+    public Reminder(String medicineName, String type, int dosage, String measure, String medicineColor, String shape,long reminderDate, String notes, long reminderTime, int state){
         mMedicineName = medicineName;
         mType =type;
         mDosage = dosage;
@@ -28,11 +25,25 @@ public class Reminder {
         mMedicineColor = medicineColor;
         mShape = shape;
         mReminderDate = reminderDate;
-        mStock = stock;
         mNotes = notes;
         mReminderTime = reminderTime;
+        mState = state;
     }
 
+    public Reminder(Reminder reminder){
+        mMedicineName = reminder.getMedicineName();
+        mType =reminder.getType();
+        mDosage = reminder.getDosage();
+        mMeasure = reminder.getMeasure();
+        mMedicineColor = reminder.getMedicineColor();
+        mShape = reminder.getShape();
+        mReminderDate = reminder.getReminderDate();
+        mNotes = reminder.getNotes();
+        mReminderTime = reminder.getReminderTime();
+        mState = reminder.getState();
+    }
+
+    public Reminder(){}
     public String getMedicineName() { return mMedicineName; }
     public String getType() { return mType; }
     public int getDosage() { return mDosage; }
@@ -40,10 +51,25 @@ public class Reminder {
     public String getMedicineColor() { return mMedicineColor; }
     public String getShape() { return mShape; }
     public long getReminderDate() { return mReminderDate; }
-    public int getStock() { return mStock; }
     public String getNotes() { return mNotes; }
     public long getReminderTime(){ return mReminderTime; }
+    public int getState(){ return mState; }
+    public void setMedicineName(String medName){ mMedicineName = medName;}
+    public void setType(String type) { mType=type; }
+    public void setDosage(int dosage) { mDosage= dosage; }
+    public void setMeasure(String measure) {  mMeasure = measure; }
+    public void setMedicineColor(String color) { mMedicineColor =  color; }
+    public void setShape(String shape) { mShape= shape; }
+    public void setReminderDate(long date) {  mReminderDate = date; }
+    public void setNotes(String notes) { mNotes = notes; }
     public void setReminderTime(long reminderTime){ mReminderTime = reminderTime;}
+    public void setState(int state){ mState= state; }
+
+
+
+
+
+
 
 
 

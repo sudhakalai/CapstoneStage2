@@ -27,12 +27,12 @@
         android:textSize="16sp"
         android:textColor="@android:color/black"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/finished_dosage"/>
+        android:layout_below="@id/tv_finished_dosage"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/finished_dosage"
+        android:id="@+id/tv_finished_dosage"
         android:layout_alignParentTop="true"
         android:layout_below="@id/tv_med_name"
         android:textSize="16sp"

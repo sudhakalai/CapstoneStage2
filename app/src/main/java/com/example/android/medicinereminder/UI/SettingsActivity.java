@@ -7,15 +7,19 @@ import android.view.MenuItem;
 
 import com.example.android.medicinereminder.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingsActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar_reminder) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
 
-        //Setting up the back button in the toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reminder);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null){

@@ -17,34 +17,34 @@ import com.example.android.medicinereminder.UI.SettingsActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    public FloatingActionButton floatingActionButton;
+    @BindView(R.id.viewpager) ViewPager viewPager;
+    @BindView(R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.fab_reminder) FloatingActionButton floatingActionButton;
+    @BindView(R.id.adView) AdView mAdView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
         ReminderDbHelper dbHelper = new ReminderDbHelper(this);
         dbHelper.getWritableDatabase();
 
-        floatingActionButton = findViewById(R.id.fab_reminder);
-
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tabs);
         CategoryTabAdapter adapter = new CategoryTabAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

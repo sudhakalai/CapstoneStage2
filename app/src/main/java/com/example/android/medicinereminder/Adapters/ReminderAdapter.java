@@ -15,6 +15,9 @@ import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.FromintegerUtils;
 import com.example.android.medicinereminder.Util.ReminderUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * This adapter populates the list items in the reminder fragment.
  */
@@ -51,18 +54,17 @@ public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.Remin
     public static class ReminderViewholder extends RecyclerView.ViewHolder{
 
         Context context;
-        TextView medTv;
-        TextView dateTv;
-        TextView stockTv;
+        @BindView(R.id.reminder_med) TextView medTv;
+        @BindView(R.id.date_tv) TextView dateTv;
+        @BindView(R.id.remaining_stock) TextView stockTv;
         Reminder reminder;
 
         public ReminderViewholder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
 
             context = itemView.getContext();
-            medTv = itemView.findViewById(R.id.reminder_med);
-            dateTv = itemView.findViewById(R.id.date_tv);
-            stockTv= itemView.findViewById(R.id.remaining_stock);
+
         }
 
         public void bind(String name, String date, String stock){

@@ -20,13 +20,15 @@ import com.example.android.medicinereminder.Adapters.ReminderAdapter;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RemindersFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    RecyclerView mRecyclerView;
-    FloatingActionButton fabReminder;
+    @BindView(R.id.rv_reminders) RecyclerView mRecyclerView;
     ReminderAdapter adapter;
     private static final int REMINDER_LOADER = 0;
 
@@ -41,10 +43,11 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
+        ButterKnife.bind(this, rootView);
 
-        mRecyclerView = rootView.findViewById(R.id.rv_reminders);
+        FloatingActionButton fabReminder = getActivity().findViewById(R.id.fab_reminder);
 
-        fabReminder = getActivity().findViewById(R.id.fab_reminder);
+
         fabReminder.setVisibility(View.VISIBLE);
 
         fabReminder.setOnClickListener(new View.OnClickListener() {
