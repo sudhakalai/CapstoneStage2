@@ -26,11 +26,12 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RemindersFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class RemindersFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ReminderAdapter.ReminderAdapterOnClickListener {
 
     @BindView(R.id.rv_reminders) RecyclerView mRecyclerView;
     ReminderAdapter adapter;
     private static final int REMINDER_LOADER = 0;
+    ReminderAdapter.ReminderAdapterOnClickListener onClickListener;
 
 
     public RemindersFragment() {
@@ -61,7 +62,8 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        adapter = new ReminderAdapter(getContext(), null);
+        onClickListener = this;
+        adapter = new ReminderAdapter(getContext(), null,onClickListener);
         mRecyclerView.setAdapter(adapter);
 
         getLoaderManager().initLoader(REMINDER_LOADER, null, this);
@@ -102,4 +104,11 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
     }
 
 
+    @Override
+    public void onItemClick(View view, int position, int id) {
+        Intent editIntent = new Intent(getContext(), EditReminderActivity.class);
+        editIntent.putExtra("reminderID", id);
+        startActivity(editIntent);
+
+    }
 }

@@ -6,12 +6,14 @@ import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
@@ -98,6 +100,11 @@ public class TimeActivity extends AppCompatActivity {
         //Setting up the back button in the toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reminder);
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         fromPicker = findViewById(R.id.from_date_picker);
@@ -231,10 +238,22 @@ public class TimeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.action_delete:
-                return true;
             case R.id.action_close:
-                return true;
+
+                    DialogInterface.OnClickListener discardButtonClickListener =
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // User clicked "Discard" button , navigate to parent activity
+                                    Intent intent1 = new Intent(getBaseContext(), MainActivity.class);
+                                    startActivity(intent1);
+
+                                }
+                            };
+                    // Show a dialog that notifies the user they have unsaved changes
+                    showUnsavedChangesDialog(discardButtonClickListener);
+                    return true;
+
             case R.id.action_save:
                 if(validateInput()){
                     new InsertReminderAsyncTask().execute();
@@ -244,9 +263,35 @@ public class TimeActivity extends AppCompatActivity {
                     Toast.makeText(context, "One or more field are empty", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+
+            case android.R.id.home:
+                finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Unsaved changes. do you want to exit?");
+        builder.setPositiveButton("Discard", discardButtonClickListener);
+        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public static class DatePickerFragment extends DialogFragment
@@ -449,11 +494,14 @@ public class TimeActivity extends AppCompatActivity {
             }
 
             if(insertionFlag == true){
-                createReminder(medName,medType, medDosage,medMeasure,medColor,medShape,medFromDate,medToDate, medNotes, medReminders);
+                reminderCursor.moveToLast();
+                int id = reminderCursor.getInt(reminderCursor.getColumnIndex(ReminderEntry._ID));
+                createReminder(medName,medType, medDosage,medMeasure,medColor,medShape,medFromDate,medToDate, medNotes, medReminders, id);
             }
 
            Log.v("testcursor", reminderCursor.getCount() + "=" + timeCursor.getCount());
-
+            cursor.close();
+            timeCursor.close();
 
             return null;
         }
@@ -512,7 +560,7 @@ public class TimeActivity extends AppCompatActivity {
         return flag;
     }
 
-    public void createReminder(String medName, int medType, int dosage, int measure, int color, int shape, long fromDate,long toDate, String notes, long[] reminders){
+    public void createReminder(String medName, int medType, int dosage, int measure, int color, int shape, long fromDate,long toDate, String notes, long[] reminders,int reminderId){
         ArrayList<Reminder> reminderList = new ArrayList<>();
         long from = getTrueDate(fromDate);
         long to = getTrueDate(toDate);
@@ -529,7 +577,8 @@ public class TimeActivity extends AppCompatActivity {
                             k,
                             notes,
                             k+getTrueTime(reminders[i]),
-                            1
+                            1,
+                            reminderId
                     ));
                 }
             }

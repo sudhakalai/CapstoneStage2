@@ -4,14 +4,15 @@
 
     <item
         android:orderInCategory="1"
-        android:id="@+id/action_close"
-        app:showAsAction="always"
-        android:title="Close"
-        android:icon="@drawable/ic_close_white"/>
-    <item
-        android:orderInCategory="2"
         android:id="@+id/action_save"
         app:showAsAction="always"
         android:title="Save"
-        android:icon="@drawable/ic_done_white"/>
+        android:icon="@drawable/ic_save_black_24dp"/>
+    <item
+        android:orderInCategory="2"
+        android:id="@+id/action_delete"
+        app:showAsAction="always"
+        android:title="Delete"
+        android:icon="@drawable/ic_delete_black_24dp"/>
+
 </menu>

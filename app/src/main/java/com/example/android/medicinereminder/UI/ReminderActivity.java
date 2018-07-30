@@ -1,9 +1,10 @@
 package com.example.android.medicinereminder.UI;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -32,7 +33,7 @@ public class ReminderActivity extends AppCompatActivity {
     @BindView(R.id.spinner_times_a_day) Spinner timesADay;
     @BindView(R.id.notes_et) EditText notesET;
     Context context;
-    private Uri mCurrentReminderUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,6 @@ public class ReminderActivity extends AppCompatActivity {
         }
 
         context = this;
-
-        Intent intent = getIntent();
-        mCurrentReminderUri = intent.getData();
-
-        if(mCurrentReminderUri == null){
-            setTitle("Add Reminder");
-        }else{
-            setTitle("Edit Reminder");
-
-        }
 
     }
 
@@ -100,9 +91,47 @@ public class ReminderActivity extends AppCompatActivity {
                 return true;
 
             case android.R.id.home:
-                finish();
-        }
+
+                    // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                    // Create a click listener to handle the user confirming that
+                    // changes should be discarded
+                    DialogInterface.OnClickListener discardButtonClickListener =
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // User clicked "Discard" button , navigate to parent activity
+                                    finish();
+                                }
+                            };
+                    // Show a dialog that notifies the user they have unsaved changes
+                    showUnsavedChangesDialog(discardButtonClickListener);
+                    return true;
+                }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to exit?");
+        builder.setPositiveButton("Discard", discardButtonClickListener);
+        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public boolean validateInput(){

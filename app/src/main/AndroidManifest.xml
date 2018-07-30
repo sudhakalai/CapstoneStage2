@@ -39,8 +39,10 @@
                 android:resource="@xml/recipe_widget_provider_info" />
         </receiver>
 
-        <activity android:name=".UI.PopActivity"
-            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity
+            android:name=".UI.PopActivity"
+            android:theme="@style/AppTheme.CustomTheme" />
+        <activity android:name=".UI.EditReminderActivity"></activity>
     </application>
 
 </manifest>
