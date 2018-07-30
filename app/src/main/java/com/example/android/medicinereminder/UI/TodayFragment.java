@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,8 @@ public class TodayFragment extends Fragment {
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_reminder);
         fab.setVisibility(View.INVISIBLE);
+
+
 
         SimpleDateFormat formatToday = new SimpleDateFormat("dd-MM-yyyy");
         String todayDate = formatToday.format(System.currentTimeMillis());
@@ -145,8 +148,6 @@ public class TodayFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-
         Button button = rootview.findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +156,6 @@ public class TodayFragment extends Fragment {
                 NotificationUtils.reminderUser(getContext(),"Take "+ "test notification");
             }
         });
-
 
         return rootview;
     }
@@ -169,8 +169,11 @@ public class TodayFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        Log.v("testlist", reminders.size()+"");
         firebaseAdapter.stopListening();
     }
+
+
 
 
 }
