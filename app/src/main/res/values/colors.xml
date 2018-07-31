@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#004ba0</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorActionBarLetters">#b3e5fc</color>
+    <color name="background">#aeaeae</color>
+    <color name="backgound_history">#f6f6f6</color>
 
 </resources>

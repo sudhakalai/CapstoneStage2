@@ -162,6 +162,10 @@ public class EditReminderActivity extends AppCompatActivity implements LoaderMan
 
             }
         });
+
+
+
+
         finish();
     }
 

@@ -19,6 +19,7 @@ import com.example.android.medicinereminder.Adapters.CategoryTabAdapter;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.Database.ReminderDbHelper;
 import com.example.android.medicinereminder.UI.SettingsActivity;
+import com.example.android.medicinereminder.Util.ReminderUtils;
 import com.example.android.medicinereminder.Widget.ReminderWidgetService;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -115,19 +116,19 @@ public class MainActivity extends AppCompatActivity {
 
                     if (today.getTime() >= fromDate || today.getTime() <= toDate) {
                         if(reminder1 != 0){
-                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + reminder1);
+                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + ReminderUtils.getTimeString(reminder1));
                         }
                         if(reminder2 != 0){
-                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + reminder2);
+                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + ReminderUtils.getTimeString(reminder2));
                         }
                         if(reminder3 != 0){
-                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + reminder3);
+                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + ReminderUtils.getTimeString(reminder3));
                         }
                         if(reminder4 != 0){
-                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + reminder4);
+                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + ReminderUtils.getTimeString(reminder4));
                         }
                         if(reminder5 != 0){
-                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + reminder5);
+                            reminderList.add(cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME)) + " " + ReminderUtils.getTimeString(reminder5));
                         }
 
                     }

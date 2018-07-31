@@ -11,7 +11,7 @@
         android:id="@+id/app_bar_reminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
+        app:elevation="@dimen/dimen_0"
         android:background="?colorPrimary">
 
 
@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:contentInsetStart="16dp"
+                app:contentInsetStart="@dimen/dimen_16"
                 app:title="@string/add_reminder"
                 app:layout_collapseMode="pin" />
 
@@ -33,149 +33,147 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/dimen_16">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/med_name"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:text="Name of the Medicine"/>
+            android:textSize="@dimen/text_16"
+            android:text="@string/med_name"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/med_name_text"
-            android:layout_marginTop="8dp"
-            android:hint="eg: crocin"
-            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:hint="@string/med_name_hint"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/med_name"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_16"
             android:inputType="text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:id="@+id/type"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dimen_8"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:text="Type"
+            android:textSize="@dimen/text_16"
+            android:text="@string/type"
             android:layout_below="@id/med_name_text"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/type_spinner"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/type"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dimen_8"
             android:entries="@array/medicine_type"
             android:spinnerMode="dialog"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/color_med"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/type_spinner"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             android:textColor="@android:color/black"
-            android:text="Color"/>
+            android:text="@string/color"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/color_spinner"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/color_med"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dimen_8"
             android:entries="@array/color_type"
             android:spinnerMode="dialog"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/shape_med"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/color_spinner"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             android:textColor="@android:color/black"
-            android:text="Shape"/>
+            android:text="@string/shape"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/shape_spinner"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/shape_med"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dimen_8"
             android:entries="@array/shape_type"
             android:spinnerMode="dialog"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stock_med"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/shape_spinner"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             android:textColor="@android:color/black"
-            android:text="Stock"/>
+            android:text="@string/stock"/>
 
         <EditText
-            android:layout_width="80dp"
+            android:layout_width="@dimen/dimen_80"
             android:layout_height="wrap_content"
             android:id="@+id/stock_text"
-            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/stock_med"
-            android:layout_marginTop="8dp"
-            android:hint="eg:100"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:hint="@string/stock_hint"
             android:inputType="number"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/dosage_med"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/stock_text"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             android:textColor="@android:color/black"
-            android:text="Dosage"/>
+            android:text="@string/dosage"/>
 
         <EditText
-            android:layout_width="80dp"
+            android:layout_width="@dimen/dimen_80"
             android:layout_height="wrap_content"
             android:id="@+id/dosage_text"
-            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/dosage_med"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:hint="eg: 1000"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
+            android:hint="@string/dosage_hint"
             android:inputType="number"/>
 
         <Spinner
@@ -183,24 +181,22 @@
             android:layout_height="wrap_content"
             android:id="@+id/spinner_dosage"
             android:layout_below="@id/dosage_med"
-            android:layout_toRightOf="@id/dosage_text"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/dosage_text"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_8"
+            android:layout_marginStart="@dimen/dimen_8"
             android:spinnerMode="dialog"
             android:entries="@array/measure_type"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/spinner_times_a_day"
-            android:layout_marginTop="8dp"
-            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:inputType="number"
-            android:textSize="16sp"
-            android:hint="eg:3"
+            android:textSize="@dimen/text_16"
             android:spinnerMode="dialog"
             android:entries="@array/times_a_day_type"
             android:layout_below="@id/dosage_text"/>
@@ -210,20 +206,19 @@
             android:layout_height="wrap_content"
             android:id="@+id/times_text"
             android:layout_below="@id/dosage_text"
-            android:layout_toRightOf="@id/spinner_times_a_day"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            android:text="times/day"/>
+            android:layout_toEndOf="@id/spinner_times_a_day"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
+            android:text="@string/times_a_day"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notes"
+            android:text="@string/notes"
             android:id="@+id/notes"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:paddingTop="8dp"
-            android:textSize="16sp"
+            android:paddingTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             android:textColor="@android:color/black"
             android:layout_below="@id/spinner_times_a_day"/>
 
@@ -231,12 +226,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/notes_et"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_16"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:paddingTop="8dp"
+            android:paddingTop="@dimen/dimen_8"
             android:inputType="text"
-            android:hint="eg: To be taken after food."
+            android:hint="@string/notes_hint"
             android:layout_below="@id/notes"/>
 
 

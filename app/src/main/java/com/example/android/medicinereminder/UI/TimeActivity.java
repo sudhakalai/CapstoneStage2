@@ -1,17 +1,21 @@
 package com.example.android.medicinereminder.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +37,7 @@ import android.widget.Toast;
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 import com.example.android.medicinereminder.MainActivity;
 import com.example.android.medicinereminder.Model.Reminder;
+import com.example.android.medicinereminder.Notifications.AlarmNotificationReceiver;
 import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.FromintegerUtils;
 import com.google.firebase.database.DatabaseReference;
@@ -84,10 +89,14 @@ public class TimeActivity extends AppCompatActivity {
     private DatePickerFragment mDatePickerFragment;
     private TimePickerFragment mTimePickerFragment;
     private int reminderTimesFlag = 5;
+    int alarmId;
     private static Context context;
     private boolean insertionFlag;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mRemindersDatabaseReference;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +115,12 @@ public class TimeActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("ALARM_ID", 100);
+        editor.apply();
 
         fromPicker = findViewById(R.id.from_date_picker);
         fromDate = findViewById(R.id.from_date);
@@ -567,6 +582,10 @@ public class TimeActivity extends AppCompatActivity {
         for(long k= from; k<= to; k=k+86400000){
             for(int i=0; i<5; i++){
                 if(reminders[i] != 0){
+                    SharedPreferences sharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(this);
+                    alarmId = sharedPreferences.getInt("ALARM_ID", 0)+1;
+                    sharedPreferences.edit().putInt("ALARM_ID", alarmId);
                     reminderList.add(new Reminder(
                             medName,
                             FromintegerUtils.getMedicineTypeString(medType, context),
@@ -578,8 +597,11 @@ public class TimeActivity extends AppCompatActivity {
                             notes,
                             k+getTrueTime(reminders[i]),
                             1,
-                            reminderId
+                            reminderId,
+                            alarmId
                     ));
+
+                    setReminderNotification(k+getTrueTime(reminders[i]),"Take " + medName, alarmId);
                 }
             }
 
@@ -612,6 +634,20 @@ public class TimeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void setReminderNotification(long time, String  message, int code){
+        Intent alarmIntent = new Intent(context, AlarmNotificationReceiver.class);
+        alarmIntent.putExtra("message", message);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), code, alarmIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        Log.v("testnotify", String.valueOf(calendar.getTimeInMillis()));
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
+        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);//set alarm manager with entered timer by converting into milliseconds
+
     }
 
 }

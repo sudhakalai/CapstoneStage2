@@ -9,19 +9,19 @@
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:contentDescription="Next Medicine"
-        android:text="Next Medicine"
+        android:layout_margin="@dimen/dimen_8"
+        android:contentDescription="@string/today_reminder"
+        android:text="@string/today_reminder"
         android:textColor="#ffffff"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_18"
         android:textStyle="bold" />
 
     <ListView
         android:id="@+id/reminder_widget_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/dimen_8"
         android:divider="@android:color/white"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="@dimen/dimen_1" />
 
 </LinearLayout>

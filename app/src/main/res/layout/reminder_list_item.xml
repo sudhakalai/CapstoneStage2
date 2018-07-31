@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
-    android:elevation="8dp"
-    android:layout_margin="8dp"
-    android:padding="16dp">
+    android:elevation="@dimen/dimen_8"
+    android:layout_margin="@dimen/dimen_8"
+    android:padding="@dimen/dimen_16">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,18 +14,16 @@
         android:id="@+id/reminder_med"
         tools:text="Ibuprofene"
         android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_16"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date_tv"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/dimen_8"
         android:textColor="@android:color/black"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         tools:text="26-07-2018 - 26-08-2018"
         android:layout_below="@id/reminder_med"/>
@@ -34,8 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/remaining_stock"
-        android:paddingTop="8dp"
-        android:layout_alignParentLeft="true"
+        android:paddingTop="@dimen/dimen_8"
         android:layout_alignParentStart="true"
         tools:text="10 pills left"
         android:textColor="@android:color/holo_red_dark"
@@ -45,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:contentDescription="@string/edit"
         android:src="@drawable/ic_edit_black_24dp"/>
 
 </RelativeLayout>

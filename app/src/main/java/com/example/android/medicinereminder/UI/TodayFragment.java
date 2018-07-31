@@ -1,6 +1,9 @@
 package com.example.android.medicinereminder.UI;
 
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.android.medicinereminder.Adapters.TodayReminderHolder;
 import com.example.android.medicinereminder.Model.Reminder;
-import com.example.android.medicinereminder.Notifications.NotificationUtils;
+import com.example.android.medicinereminder.Notifications.AlarmNotificationService;
 import com.example.android.medicinereminder.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -32,6 +36,7 @@ import com.google.firebase.database.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -48,6 +53,7 @@ public class TodayFragment extends Fragment {
     private DatabaseReference mRemindersDatabaseReference;
     FirebaseRecyclerAdapter<Reminder, TodayReminderHolder> firebaseAdapter;
     public  ArrayList<Reminder> reminders = new ArrayList<>();
+    private PendingIntent pendingIntent;
 
 
     public TodayFragment() {
@@ -150,14 +156,46 @@ public class TodayFragment extends Fragment {
 
         Button button = rootview.findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+       /* button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationUtils.reminderUser(getContext(),"Take "+ "test notification");
+                Intent alarmIntent = new Intent(getContext(), AlarmNotificationReceiver.class);
+                alarmIntent.putExtra("message", "Take Crocin");
+                alarmIntent.putExtra("state", true);
+                pendingIntent = PendingIntent.getBroadcast(getContext(), 100, alarmIntent, 0);
+                triggerAlarmManager(1);
             }
-        });
+        });*/
 
         return rootview;
+    }
+
+    //Trigger alarm manager with entered time interval
+    public void triggerAlarmManager(int alarmTriggerTime) {
+        // get a Calendar object with current time
+        Calendar cal = Calendar.getInstance();
+        // add alarmTriggerTime seconds to the calendar object
+        cal.setTimeInMillis(1532950500000L);
+
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
+        manager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);//set alarm manager with entered timer by converting into milliseconds
+
+        Toast.makeText(getContext(), "Alarm Set for " + alarmTriggerTime + " seconds.", Toast.LENGTH_SHORT).show();
+    }
+
+    //Stop/Cancel alarm manager
+    public void stopAlarmManager() {
+
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);//cancel the alarm manager of the pending intent
+
+
+        //remove the notification from notification tray
+        NotificationManager notificationManager = (NotificationManager) this
+                .getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(AlarmNotificationService.NOTIFICATION_ID);
+
+        Toast.makeText(getContext(), "Alarm Canceled/Stop by User.", Toast.LENGTH_SHORT).show();
     }
 
     @Override

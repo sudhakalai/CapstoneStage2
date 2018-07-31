@@ -70,10 +70,7 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
         onBindViewHolder(viewHolder, mCursor);
     }
 
-    /**
-     * Change the underlying cursor to a new cursor. If there is an existing cursor it will be
-     * closed.
-     */
+
     public void changeCursor(Cursor cursor) {
         Cursor old = swapCursor(cursor);
         if (old != null) {
@@ -81,11 +78,6 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
         }
     }
 
-    /**
-     * Swap in a new Cursor, returning the old Cursor.  Unlike
-     * {@link #changeCursor(Cursor)}, the returned old Cursor is <em>not</em>
-     * closed.
-     */
     public Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;
@@ -124,7 +116,6 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
             super.onInvalidated();
             mDataValid = false;
             notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
         }
     }
 }

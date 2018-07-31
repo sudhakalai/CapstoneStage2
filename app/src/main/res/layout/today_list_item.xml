@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:elevation="8dp"
+    android:elevation="@dimen/dimen_8"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginLeft="16dp">
+    android:padding="@dimen/dimen_16"
+    android:layout_marginTop="@dimen/dimen_16"
+    android:layout_marginRight="@dimen/dimen_16"
+    android:layout_marginLeft="@dimen/dimen_16">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,24 +18,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/medicine_name"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_16"
             android:textColor="@color/colorPrimaryDark"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             tools:text="Ibuprofen"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/iv_today_done"
+            android:contentDescription="@string/edit"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:paddingRight="16dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:paddingLeft="16dp"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="@dimen/dimen_16"
+            android:paddingEnd="@dimen/dimen_16"
+            android:paddingStart="@dimen/dimen_16"
+            android:paddingLeft="@dimen/dimen_16"
             android:src="@drawable/ic_edit_black_24dp"/>
 
 
@@ -43,12 +43,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/iv_today_status"
-            android:paddingRight="16dp"
-            android:paddingEnd="16dp"
-            android:paddingLeft="16dp"
-            android:paddingStart="16dp"
+            android:contentDescription="@string/notify"
+            android:paddingEnd="@dimen/dimen_16"
+            android:paddingStart="@dimen/dimen_16"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@id/iv_today_done"
+            android:layout_toStartOf="@id/iv_today_done"
             android:src="@drawable/ic_notifications_black_24dp"/>
 
     </RelativeLayout>
@@ -57,24 +56,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_time"
-        android:paddingTop="8dp"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:paddingTop="@dimen/dimen_8"
+        android:textSize="@dimen/text_16"
         tools:text="10:30 AM"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:textSize="16sp"
+        android:paddingTop="@dimen/dimen_8"
+        android:textSize="@dimen/text_16"
         android:id="@+id/dosage"
         tools:text="1 * 100mg, circular, blue tablet"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:textSize="16sp"
+        android:paddingTop="@dimen/dimen_8"
+        android:textSize="@dimen/text_16"
         android:id="@+id/notes"
         tools:text="To be taken after food. Do not consume with tea"/>
 

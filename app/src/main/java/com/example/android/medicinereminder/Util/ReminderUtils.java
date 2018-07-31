@@ -21,6 +21,12 @@ public class ReminderUtils {
         return format.format(date1);
     }
 
+    public static String getTimeString(long date){
+        Date date1 = new Date(date);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+        return format.format(date1);
+    }
+
     public static String toBaseString(ArrayList<String> reminders) {
         Log.v("testgson", reminders.size()+"");
         Gson gson = new Gson();

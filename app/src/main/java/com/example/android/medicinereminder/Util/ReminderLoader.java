@@ -35,7 +35,10 @@ public class ReminderLoader extends AsyncTaskLoader<ReminderEdit> {
             cursor.moveToFirst();
             timeCursor.moveToFirst();
             String name = cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME));
-            String date = "From " + cursor.getLong(cursor.getColumnIndex(ReminderEntry.FROM_DATE)) + " to " + cursor.getLong(cursor.getColumnIndex(ReminderEntry.TO_DATE));
+            String date = "From "
+                    + ReminderUtils.getDateString(cursor.getLong(cursor.getColumnIndex(ReminderEntry.FROM_DATE)))
+                    + " to "
+                    + ReminderUtils.getDateString(cursor.getLong(cursor.getColumnIndex(ReminderEntry.TO_DATE)));
             int type = cursor.getInt(cursor.getColumnIndex(ReminderEntry.TYPE));
             int measure = cursor.getInt(cursor.getColumnIndex(ReminderEntry.MEASURE));
             int color = cursor.getInt(cursor.getColumnIndex(ReminderEntry.COLOR));
@@ -61,19 +64,19 @@ public class ReminderLoader extends AsyncTaskLoader<ReminderEdit> {
             long time4 = timeCursor.getLong(timeCursor.getColumnIndex(ReminderEntry.REMINDER_FOUR));
             long time5 = timeCursor.getLong(timeCursor.getColumnIndex(ReminderEntry.REMINDER_FIVE));
             if(time1 != 0){
-                time = time + time1;
+                time = time + ReminderUtils.getTimeString(time1);
             }
             if(time2 != 0){
-                time = time +", "+ time2;
+                time = time +", "+ ReminderUtils.getTimeString(time2);
             }
             if(time3 != 0){
-                time = time +", "+ time3;
+                time = time +", "+ ReminderUtils.getTimeString(time3);
             }
             if(time4 != 0){
-                time = time+", "+ time4;
+                time = time+", "+ ReminderUtils.getTimeString(time4);
             }
             if(time5 != 0){
-                time = time +", "+ time5 ;
+                time = time +", "+ ReminderUtils.getTimeString(time5) ;
             }
 
             reminderEdit = new ReminderEdit(name, app, date, time, cursor.getInt(cursor.getColumnIndex(ReminderEntry.STOCK)));

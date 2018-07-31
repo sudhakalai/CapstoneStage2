@@ -70,6 +70,39 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="widget_reminder_key">widget_reminder_key</string>
+    <string name="stock">Stock</string>
+    <string name="stock_hint">eg 1</string>
+    <string name="reminder_status">Set reminder statuc</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="took_med">I took my medicine</string>
+    <string name="no_med">I did not take my medicine</string>
+    <string name="none">None</string>
+    <string name="med_name">Name of the Medicine</string>
+    <string name="med_name_hint">eg: crocin</string>
+    <string name="type">Type</string>
+    <string name="color">Color</string>
+    <string name="shape">Shape</string>
+    <string name="dosage">Dosage</string>
+    <string name="dosage_hint">eg 500</string>
+    <string name="times_a_day">times/day</string>
+    <string name="notes">Notes</string>
+    <string name="notes_hint">eg: To be taken after food.</string>
+    <string name="setting">Settings</string>
+    <string name="from">From date</string>
+    <string name="date_picker">Date picker</string>
+    <string name="time_picker">Time picker</string>
+    <string name="to">To date</string>
+    <string name="rem1">First reminder</string>
+    <string name="rem2">Second reminder</string>
+    <string name="rem3">Third reminder</string>
+    <string name="rem4">Fourth reminder</string>
+    <string name="rem5">Fifth reminder</string>
+    <string name="date">Date</string>
+    <string name="status">Reminder state</string>
+    <string name="today_reminder">Todays Reminders</string>
+    <string name="edit">Edit</string>
+    <string name="notify">Notify</string>
 
 
 </resources>

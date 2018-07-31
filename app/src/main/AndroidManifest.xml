@@ -24,6 +24,12 @@
         <activity android:name=".UI.TimeActivity" />
         <activity android:name=".UI.SettingsActivity" />
 
+        <!--  Declare  Alarm Broadcast receiver here  -->
+        <receiver android:name=".Notifications.AlarmNotificationReceiver" />
+
+        <!--  Declare  Alarm Notification Service here  -->
+        <service android:name=".Notifications.AlarmNotificationService" />
+
         <provider
             android:name=".Database.ReminderProvider"
             android:authorities="com.example.android.medicinereminder"

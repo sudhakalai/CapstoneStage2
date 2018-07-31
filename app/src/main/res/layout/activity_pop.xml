@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:elevation="8dp"
-    android:padding="16dp"
-    android:background="#aeaeae"
+    android:elevation="@dimen/dimen_8"
+    android:padding="@dimen/dimen_16"
+    android:background="@color/background"
     tools:context=".UI.PopActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_pop_title"
-        android:text="Set reminder status"
+        android:text="@string/reminder_status"
         android:textColor="@android:color/black"
         android:textStyle="bold"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/text_18"/>
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp">
+        android:paddingTop="@dimen/dimen_8">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/medicine_taken"
-            android:text="I took my medicine"/>
+            android:text="@string/took_med"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/medicine_no"
-            android:text="I did not take my medicine"/>
+            android:text="@string/no_med"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/none"
             android:checked="true"
-            android:text="None"/>
+            android:text="@string/none"/>
     </RadioGroup>
 
     <LinearLayout
@@ -49,12 +48,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/save"
-            android:text="Save"/>
+            android:text="@string/save"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cancel"
-            android:text="Cancel"/>
+            android:text="@string/cancel"/>
     </LinearLayout>
 
 </LinearLayout>

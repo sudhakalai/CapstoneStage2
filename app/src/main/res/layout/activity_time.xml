@@ -11,7 +11,7 @@
         android:id="@+id/app_bar_reminder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
+        app:elevation="@dimen/dimen_0"
         android:background="?colorPrimary">
 
 
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentInsetStart="16dp"
+            app:contentInsetStart="@dimen/dimen_16"
             app:title="Time Setup"
             app:layout_collapseMode="pin" />
 
@@ -29,72 +29,70 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/dimen_16">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/from_date_text"
-            android:text="From Date"
+            android:text="@string/from"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:textColor="@android:color/black"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/from_date_picker"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
+            android:contentDescription="@string/date_picker"
+            android:paddingStart="@dimen/dimen_8"
+            android:paddingEnd="@dimen/dimen_8"
             android:src="@drawable/ic_date_range_black_24dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/from_date_text"/>
+            android:layout_toEndOf="@id/from_date_text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/from_date"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_below="@id/from_date_text"
-            android:paddingTop="8dp"
-            android:textSize="16sp"
+            android:paddingTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             tools:text="25-02-2018"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/to_date_text"
-            android:text="To Date"
-            android:layout_alignParentLeft="true"
+            android:text="@string/to"
             android:layout_alignParentStart="true"
-            android:paddingTop="8dp"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_below="@id/from_date"
             android:textColor="@android:color/black"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_16"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/to_date_picker"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
+            android:contentDescription="@string/date_picker"
+            android:paddingEnd="@dimen/dimen_8"
+            android:paddingStart="@dimen/dimen_8"
+            android:paddingTop="@dimen/dimen_8"
             android:src="@drawable/ic_date_range_black_24dp"
             android:layout_below="@id/from_date"
-            android:layout_toRightOf="@id/to_date_text"/>
+            android:layout_toEndOf="@id/to_date_text"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/to_date"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_below="@id/to_date_text"
-            android:paddingTop="8dp"
-            android:textSize="16sp"
+            android:paddingTop="@dimen/dimen_8"
+            android:textSize="@dimen/text_16"
             tools:text="25-02-2018"/>
 
         <RelativeLayout
@@ -102,8 +100,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/reminder_one"
-            android:paddingTop="8dp"
-            android:layout_alignParentLeft="true"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:layout_below="@id/to_date">
 
@@ -111,32 +108,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/first_reminder_text"
-                android:text="First reminder"
+                android:text="@string/rem1"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_16"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+                android:paddingTop="@dimen/dimen_8"
                 android:id="@+id/first_reminder"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@id/first_reminder_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_16"
                 tools:text="10:28 PM "/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:contentDescription="@string/time_picker"
                 android:id="@+id/first_button"
-                android:layout_toRightOf="@id/first_reminder_text"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:layout_toEndOf="@id/first_reminder_text"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingStart="@dimen/dimen_8"
                 android:src="@drawable/ic_access_time_black_24dp"/>
 
         </RelativeLayout>
@@ -145,39 +141,37 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/reminder_two"
-            android:paddingTop="8dp"
-            android:layout_alignParentLeft="true"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:layout_below="@id/reminder_one">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Second reminder"
+                android:text="@string/rem2"
                 android:id="@+id/second_reminder_text"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_16"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:textSize="16sp"
+                android:paddingTop="@dimen/dimen_8"
+                android:textSize="@dimen/text_16"
                 android:id="@+id/second_reminder"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@id/second_reminder_text"
                 tools:text="10:28 PM "/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingStart="@dimen/dimen_8"
+                android:contentDescription="@string/time_picker"
                 android:id="@+id/second_button"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/second_reminder_text"
+                android:layout_toEndOf="@id/second_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
 
 
@@ -187,40 +181,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/reminder_three"
-            android:paddingTop="8dp"
-            android:layout_alignParentLeft="true"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:layout_below="@id/reminder_two">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Third reminder"
+                android:text="@string/rem3"
                 android:id="@+id/third_reminder_text"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_16"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:id="@+id/third_reminder"
                 android:layout_below="@id/third_reminder_text"
-                android:paddingTop="8dp"
-                android:textSize="16sp"
+                android:paddingTop="@dimen/dimen_8"
+                android:textSize="@dimen/text_16"
                 tools:text="10:28 PM "/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingStart="@dimen/dimen_8"
+                android:contentDescription="@string/time_picker"
                 android:id="@+id/third_button"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/third_reminder_text"
+                android:layout_toEndOf="@id/third_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
 
         </RelativeLayout>
@@ -229,40 +221,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/reminder_four"
-            android:paddingTop="8dp"
-            android:layout_alignParentLeft="true"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:layout_below="@id/reminder_three">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fourth reminder"
+                android:text="@string/rem4"
                 android:id="@+id/fourth_reminder_text"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_16"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+                android:paddingTop="@dimen/dimen_8"
                 android:id="@+id/fourth_reminder"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@id/fourth_reminder_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_16"
                 tools:text="10:28 PM "/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingStart="@dimen/dimen_8"
+                android:contentDescription="@string/time_picker"
                 android:id="@+id/fourth_button"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/fourth_reminder_text"
+                android:layout_toEndOf="@id/fourth_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
 
         </RelativeLayout>
@@ -271,40 +261,38 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/reminder_five"
-            android:paddingTop="8dp"
-            android:layout_alignParentLeft="true"
+            android:paddingTop="@dimen/dimen_8"
             android:layout_alignParentStart="true"
             android:layout_below="@id/reminder_four">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fifth reminder"
+                android:text="@string/rem5"
                 android:id="@+id/fifth_reminder_text"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:textColor="@android:color/black"
-                android:textSize="16sp"/>
+                android:textSize="@dimen/text_16"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp"
+                android:paddingTop="@dimen/dimen_8"
                 android:id="@+id/fifth_reminder"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:layout_below="@id/fifth_reminder_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_16"
                 tools:text="10:28 PM "/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:paddingEnd="@dimen/dimen_8"
+                android:paddingStart="@dimen/dimen_8"
+                android:contentDescription="@string/time_picker"
                 android:id="@+id/fifth_button"
                 android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/fifth_reminder_text"
+                android:layout_toEndOf="@id/fifth_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
         </RelativeLayout>
 

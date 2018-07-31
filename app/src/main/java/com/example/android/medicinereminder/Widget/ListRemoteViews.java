@@ -14,7 +14,6 @@ public class ListRemoteViews implements RemoteViewsService.RemoteViewsFactory {
 
     public ListRemoteViews(Context context) {
         this.mContext = context;
-        reminders = Preference.loadReminder(mContext);
     }
 
     @Override

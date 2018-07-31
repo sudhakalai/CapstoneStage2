@@ -17,8 +17,9 @@ public class Reminder {
     private long mReminderTime;
     private int mState;
     private int mReminderId;
+    private int mAlarmId;
 
-    public Reminder(String medicineName, String type, int dosage, String measure, String medicineColor, String shape,long reminderDate, String notes, long reminderTime, int state, int reminderId){
+    public Reminder(String medicineName, String type, int dosage, String measure, String medicineColor, String shape,long reminderDate, String notes, long reminderTime, int state, int reminderId, int alarmId){
         mMedicineName = medicineName;
         mType =type;
         mDosage = dosage;
@@ -30,6 +31,7 @@ public class Reminder {
         mReminderTime = reminderTime;
         mState = state;
         mReminderId = reminderId;
+        mAlarmId = alarmId;
     }
 
     public Reminder(Reminder reminder){
@@ -44,6 +46,7 @@ public class Reminder {
         mReminderTime = reminder.getReminderTime();
         mState = reminder.getState();
         mReminderId = reminder.getReminderId();
+        mAlarmId = reminder.getAlarmId();
     }
 
     public Reminder(){}
@@ -58,6 +61,8 @@ public class Reminder {
     public long getReminderTime(){ return mReminderTime; }
     public int getState(){ return mState; }
     public int getReminderId(){ return mReminderId;}
+    public int getAlarmId() { return mAlarmId; }
+
     public void setMedicineName(String medName){ mMedicineName = medName;}
     public void setType(String type) { mType=type; }
     public void setDosage(int dosage) { mDosage= dosage; }
@@ -69,13 +74,5 @@ public class Reminder {
     public void setReminderTime(long reminderTime){ mReminderTime = reminderTime;}
     public void setState(int state){ mState= state; }
     public void setReminderId(int id){ mReminderId = id;}
-
-
-
-
-
-
-
-
-
+    public void setAlarmId(int alarmId) { mAlarmId = alarmId; }
 }

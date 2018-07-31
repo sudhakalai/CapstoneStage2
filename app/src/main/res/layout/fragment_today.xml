@@ -7,8 +7,8 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f6f6f6"
-    android:paddingBottom="64dp"
+    android:background="@color/backgound_history"
+    android:paddingBottom="@dimen/dimen_64"
     tools:context="com.example.android.medicinereminder.UI.TodayFragment">
 
     <android.support.v7.widget.RecyclerView
