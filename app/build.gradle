@@ -4,9 +4,9 @@ android {
     signingConfigs {
         config {
             keyAlias 'key0'
-            keyPassword 'sudhasudha'
-            storeFile file('$rootDir/android.jks')
-            storePassword 'sudhasudha'
+            keyPassword 'medreminder'
+            storeFile file('../app/keystores/appkey.jks')
+            storePassword 'medreminder'
         }
     }
     compileSdkVersion 27
