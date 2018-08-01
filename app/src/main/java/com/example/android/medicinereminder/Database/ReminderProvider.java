@@ -41,6 +41,7 @@ public class ReminderProvider extends ContentProvider{
         return true;
     }
 
+    //Query the database
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
@@ -82,6 +83,7 @@ public class ReminderProvider extends ContentProvider{
         return null;
     }
 
+    //insert reminder into database
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
@@ -117,6 +119,7 @@ public class ReminderProvider extends ContentProvider{
         }
     }
 
+    //delete from database
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -154,6 +157,7 @@ public class ReminderProvider extends ContentProvider{
         return rowsDeleted;
     }
 
+    //update database
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         int match = sUriMatcher.match(uri);

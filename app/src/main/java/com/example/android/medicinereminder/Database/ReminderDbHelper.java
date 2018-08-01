@@ -23,6 +23,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        //reminder table
         String SQL_CREATE_REMINDER_TABLE = "CREATE TABLE " + ReminderEntry.TABLE_NAME + "("
                 + ReminderEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ReminderEntry.REMINDER_ID + " INTEGER NOT NULL, "
@@ -38,6 +39,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
                 + ReminderEntry.FROM_DATE + " INTEGER NOT NULL, "
                 + ReminderEntry.TO_DATE + " INTEGER NOT NULL );";
 
+        //time table
         String SQL_CREATE_REMINDER_TIME_TABLE = "CREATE TABLE " + ReminderEntry.TIME_TABLE_NAME + "("
                 + ReminderEntry.TIME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ReminderEntry.REMINDER_ONE + " INTEGER NOT NULL, "

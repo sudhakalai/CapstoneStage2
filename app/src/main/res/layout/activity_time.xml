@@ -26,6 +26,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,6 +52,7 @@
             android:contentDescription="@string/date_picker"
             android:paddingStart="@dimen/dimen_8"
             android:paddingEnd="@dimen/dimen_8"
+            android:nextFocusForward="@id/from_date"
             android:src="@drawable/ic_date_range_black_24dp"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/from_date_text"/>
@@ -59,6 +64,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/from_date_text"
             android:paddingTop="@dimen/dimen_8"
+            android:nextFocusForward="@id/to_date_picker"
             android:textSize="@dimen/text_16"
             tools:text="25-02-2018"/>
 
@@ -83,6 +89,7 @@
             android:paddingTop="@dimen/dimen_8"
             android:src="@drawable/ic_date_range_black_24dp"
             android:layout_below="@id/from_date"
+            android:nextFocusForward="@id/to_date"
             android:layout_toEndOf="@id/to_date_text"/>
 
         <TextView
@@ -93,6 +100,7 @@
             android:layout_below="@id/to_date_text"
             android:paddingTop="@dimen/dimen_8"
             android:textSize="@dimen/text_16"
+            android:nextFocusForward="@id/first_button"
             tools:text="25-02-2018"/>
 
         <RelativeLayout
@@ -120,6 +128,7 @@
                 android:paddingTop="@dimen/dimen_8"
                 android:id="@+id/first_reminder"
                 android:layout_alignParentStart="true"
+                android:nextFocusForward="@id/second_button"
                 android:layout_below="@id/first_reminder_text"
                 android:textSize="@dimen/text_16"
                 tools:text="10:28 PM "/>
@@ -129,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:contentDescription="@string/time_picker"
+                android:nextFocusForward="@id/first_reminder"
                 android:id="@+id/first_button"
                 android:layout_toEndOf="@id/first_reminder_text"
                 android:paddingEnd="@dimen/dimen_8"
@@ -161,6 +171,7 @@
                 android:textSize="@dimen/text_16"
                 android:id="@+id/second_reminder"
                 android:layout_alignParentStart="true"
+                android:nextFocusForward="@id/third_button"
                 android:layout_below="@id/second_reminder_text"
                 tools:text="10:28 PM "/>
             <ImageView
@@ -170,6 +181,7 @@
                 android:paddingStart="@dimen/dimen_8"
                 android:contentDescription="@string/time_picker"
                 android:id="@+id/second_button"
+                android:nextFocusForward="@id/second_reminder"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@id/second_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
@@ -199,6 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:id="@+id/third_reminder"
+                android:nextFocusForward="@id/fourth_button"
                 android:layout_below="@id/third_reminder_text"
                 android:paddingTop="@dimen/dimen_8"
                 android:textSize="@dimen/text_16"
@@ -210,6 +223,7 @@
                 android:paddingEnd="@dimen/dimen_8"
                 android:paddingStart="@dimen/dimen_8"
                 android:contentDescription="@string/time_picker"
+                android:nextFocusForward="@id/third_reminder"
                 android:id="@+id/third_button"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@id/third_reminder_text"
@@ -239,6 +253,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dimen_8"
                 android:id="@+id/fourth_reminder"
+                android:nextFocusForward="@id/fifth_button"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/fourth_reminder_text"
                 android:textSize="@dimen/text_16"
@@ -251,6 +266,7 @@
                 android:paddingStart="@dimen/dimen_8"
                 android:contentDescription="@string/time_picker"
                 android:id="@+id/fourth_button"
+                android:nextFocusForward="@id/fourth_reminder"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@id/fourth_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
@@ -292,12 +308,13 @@
                 android:contentDescription="@string/time_picker"
                 android:id="@+id/fifth_button"
                 android:layout_alignParentTop="true"
+                android:nextFocusForward="@id/first_reminder"
                 android:layout_toEndOf="@id/fifth_reminder_text"
                 android:src="@drawable/ic_access_time_black_24dp"/>
         </RelativeLayout>
 
     </RelativeLayout>
-
+    </ScrollView>
 
 
 </LinearLayout>

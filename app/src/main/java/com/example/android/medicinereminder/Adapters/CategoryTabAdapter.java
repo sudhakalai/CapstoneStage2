@@ -19,6 +19,7 @@ public class CategoryTabAdapter extends FragmentPagerAdapter {
     private static int PAGE_COUNT = 3;
     private Context mContext;
 
+    //Constructors
     public CategoryTabAdapter(FragmentManager fm) {
         super(fm);
     }

@@ -15,11 +15,6 @@
         android:id="@+id/rv_today"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:text="Button"/>
 
 </FrameLayout>
 

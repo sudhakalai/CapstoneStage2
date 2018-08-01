@@ -26,17 +26,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/medicine_taken"
+            android:nextFocusForward="@id/medicine_no"
             android:text="@string/took_med"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/medicine_no"
+            android:nextFocusForward="@id/none"
             android:text="@string/no_med"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/none"
             android:checked="true"
+            android:nextFocusForward="@id/save"
             android:text="@string/none"/>
     </RadioGroup>
 
@@ -48,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/save"
+            android:nextFocusForward="@id/cancel"
             android:text="@string/save"/>
         <Button
             android:layout_width="wrap_content"

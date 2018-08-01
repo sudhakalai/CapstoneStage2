@@ -8,9 +8,13 @@ import android.widget.TextView;
 
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
+import com.example.android.medicinereminder.Util.ReminderUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+//This is the adapter that gets medicine history from firebase into the recyclerview
+
 
 public class HistoryReminderHolder extends RecyclerView.ViewHolder {
 
@@ -35,9 +39,13 @@ public class HistoryReminderHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Reminder reminder){
-        medicineName.setText(reminder.getMedicineName());
-        medcinedosage.setText(" "+reminder.getDosage() + reminder.getMeasure());
-        medicineTime.setText(String.valueOf(reminder.getReminderTime()));
+        medicineName.setText(reminder.getMedicineName()+" ");
+        String dosage = reminder.getDosage()+" ";
+        if(!reminder.getMeasure().equalsIgnoreCase("None")){
+            dosage = dosage + reminder.getMeasure();
+        }
+        medcinedosage.setText(dosage);
+        medicineTime.setText(ReminderUtils.getTimeString(reminder.getReminderTime()));
         if(reminder.getState() == 1){
             state.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_notifications_black_24dp));
         }else if(reminder.getState() == 2){

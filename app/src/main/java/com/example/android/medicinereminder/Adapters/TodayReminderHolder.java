@@ -8,12 +8,13 @@ import android.widget.TextView;
 
 import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.R;
+import com.example.android.medicinereminder.Util.ReminderUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Sudha on 27-Jul-18.
+ * This is the adapter which populates the todays reminders from firebase
  */
 
 public class TodayReminderHolder extends RecyclerView.ViewHolder{
@@ -52,10 +53,25 @@ public class TodayReminderHolder extends RecyclerView.ViewHolder{
     }
 
     public void bind(Reminder reminder ){
-        tvTime.setText(String.valueOf(reminder.getReminderTime()));
+        tvTime.setText(ReminderUtils.getTimeString(reminder.getReminderTime()));
         tvMedicineName.setText(reminder.getMedicineName());
         tvNotes.setText(reminder.getNotes());
-        tvDosage.setText(reminder.getDosage() + reminder.getMeasure() + ", " + reminder.getMedicineColor() + ", "+ reminder.getShape()+ " "+ reminder.getType());
+
+        String appearance = reminder.getDosage()+ " ";
+        if(!reminder.getMeasure().equalsIgnoreCase("None")){
+            appearance = appearance+ reminder.getMeasure()+", ";
+        }
+        if(!reminder.getMedicineColor().equalsIgnoreCase("None")){
+            appearance = appearance+ reminder.getMedicineColor()+", ";
+        }
+        if(!reminder.getShape().equalsIgnoreCase("None")){
+            appearance = appearance+ reminder.getShape()+" ";
+        }
+        if(!reminder.getType().equalsIgnoreCase("None")){
+            appearance = appearance+ reminder.getType()+" ";
+        }
+
+        tvDosage.setText(appearance);
         if(reminder.getState() == 1){
             todayStatus.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_notifications_black_24dp));
         }else if(reminder.getState() == 2){

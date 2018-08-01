@@ -41,6 +41,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_18"
                 android:textStyle="bold"
+                android:nextFocusForward="@id/med_appearance"
                 tools:text="Crocin" />
             <TextView
                 android:layout_width="wrap_content"
@@ -48,6 +49,7 @@
                 android:layout_marginTop="@dimen/dimen_8"
                 android:id="@+id/med_appearance"
                 android:textSize="@dimen/text_16"
+                android:nextFocusForward="@id/dates"
                 tools:text="100mg, Blue, Round Tablet"/>
 
             <TextView
@@ -56,6 +58,7 @@
                 android:layout_marginTop="@dimen/dimen_8"
                 android:id="@+id/dates"
                 android:textSize="@dimen/text_16"
+                android:nextFocusForward="@id/med_times"
                 tools:text="From 26-04-2018 to 30-5-2018"/>
 
             <TextView
@@ -64,6 +67,7 @@
                 android:layout_marginTop="@dimen/dimen_8"
                 android:id="@+id/med_times"
                 android:textSize="@dimen/text_16"
+                android:nextFocusForward="@id/med_stock"
                 tools:text="10.30AM, 12:30PM"/>
 
             <TextView

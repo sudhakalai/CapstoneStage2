@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -53,6 +54,9 @@ public class HistoryFragment extends Fragment {
     static FirebaseRecyclerAdapter<Reminder, HistoryReminderHolder> firebaseAdapter;
     static Context context;
     private DatePickerFragment mDatePickerFragment;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "HistoryFragment.recycler.layout";
+    Parcelable savedRecyclerLayoutState;
+    private static final String DATE_STRING = "dateString";
 
     private static int NO_OF_COLUMNS = 2;
 
@@ -76,9 +80,11 @@ public class HistoryFragment extends Fragment {
 
         fab.setVisibility(View.INVISIBLE);
 
+        //getting data from firebase
         mRemindersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("reminders");
         mRemindersDatabaseReference.keepSynced(true);
 
+        //getting today time
         SimpleDateFormat formatToday = new SimpleDateFormat("dd-MM-yyyy");
         String todayDate = formatToday.format(System.currentTimeMillis());
         inputDate.setText(todayDate);
@@ -88,6 +94,7 @@ public class HistoryFragment extends Fragment {
             Query query = mRemindersDatabaseReference
                     .orderByChild("reminderDate").equalTo(input.getTime());
 
+            //child event listener
             ChildEventListener childEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -172,8 +179,7 @@ public class HistoryFragment extends Fragment {
         firebaseAdapter.stopListening();
     }
 
-
-
+    //Date picker
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
@@ -200,6 +206,7 @@ public class HistoryFragment extends Fragment {
         }
     }
 
+    //Populates UI
     public static void populateUI(String date){
         firebaseAdapter.stopListening();
         Log.v("testdate", date);
@@ -262,5 +269,23 @@ public class HistoryFragment extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(DATE_STRING, inputDate.getText().toString());
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null)
+        {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+            inputDate.setText(savedInstanceState.getString(DATE_STRING));
+        }
     }
 }

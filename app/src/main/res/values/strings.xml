@@ -79,15 +79,15 @@
     <string name="no_med">I did not take my medicine</string>
     <string name="none">None</string>
     <string name="med_name">Name of the Medicine</string>
-    <string name="med_name_hint">eg: crocin</string>
+    <string name="med_name_hint">Enter medicine name</string>
     <string name="type">Type</string>
     <string name="color">Color</string>
     <string name="shape">Shape</string>
     <string name="dosage">Dosage</string>
-    <string name="dosage_hint">eg 500</string>
+    <string name="dosage_hint">Enter dosage</string>
     <string name="times_a_day">times/day</string>
     <string name="notes">Notes</string>
-    <string name="notes_hint">eg: To be taken after food.</string>
+    <string name="notes_hint">Enter notes</string>
     <string name="setting">Settings</string>
     <string name="from">From date</string>
     <string name="date_picker">Date picker</string>
@@ -103,6 +103,28 @@
     <string name="today_reminder">Todays Reminders</string>
     <string name="edit">Edit</string>
     <string name="notify">Notify</string>
+
+
+    <string name="stock_title">Stock reminder</string>
+    <string name="stock_key">stock_reminder</string>
+    <string name="stock_summary_on">On</string>
+    <string name="stock_summary_off">Off</string>
+
+    <string name="delete_all_data_title">Delete all data</string>
+    <string name="delete_all_data_key">delete_all_data_key</string>
+
+    <string name="del_success">"Delete failed"</string>
+    <string name="del_fail">"Delete successful"</string>
+
+    <string name="deleteRem">"Delete Reminder?"</string>
+    <string name="delete">"Delete"</string>
+    <string name="cancelR">"Cancel"</string>
+
+    <string name="unsaved_dialog">"Unsaved changes. do you want to exit?"</string>
+    <string name="unsaved">"Do you want to exit?"</string>
+    <string name="discard">"Discard"</string>
+    <string name="keep_editing">"Keep editing"</string>
+
 
 
 </resources>

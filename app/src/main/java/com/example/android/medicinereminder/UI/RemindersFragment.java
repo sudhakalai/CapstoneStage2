@@ -1,9 +1,13 @@
 package com.example.android.medicinereminder.UI;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -32,6 +36,8 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
     ReminderAdapter adapter;
     private static final int REMINDER_LOADER = 0;
     ReminderAdapter.ReminderAdapterOnClickListener onClickListener;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "ReminderFragment.recycler.layout";
+    Parcelable savedRecyclerLayoutState;
 
 
     public RemindersFragment() {
@@ -55,7 +61,7 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ReminderActivity.class);
-                startActivity(intent);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         });
 
@@ -66,12 +72,13 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
         adapter = new ReminderAdapter(getContext(), null,onClickListener);
         mRecyclerView.setAdapter(adapter);
 
+        //loader
         getLoaderManager().initLoader(REMINDER_LOADER, null, this);
 
         return rootView;
     }
 
-
+    //loader
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String [] projection = {
@@ -104,11 +111,28 @@ public class RemindersFragment extends Fragment implements LoaderManager.LoaderC
     }
 
 
+    //implemented when clicked on recycler view item
     @Override
     public void onItemClick(View view, int position, int id) {
         Intent editIntent = new Intent(getContext(), EditReminderActivity.class);
         editIntent.putExtra("reminderID", id);
-        startActivity(editIntent);
+        startActivity(editIntent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT, mRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null)
+        {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        }
     }
 }

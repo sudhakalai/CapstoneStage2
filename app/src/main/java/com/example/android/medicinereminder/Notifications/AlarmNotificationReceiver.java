@@ -12,7 +12,7 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-        //This will send a notification message and show notification in notification tray
+        //This will show notification in notification tray
         ComponentName comp = new ComponentName(context.getPackageName(),
                 AlarmNotificationService.class.getName());
         startWakefulService(context, (intent.setComponent(comp)));

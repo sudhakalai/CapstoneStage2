@@ -1,7 +1,7 @@
 package com.example.android.medicinereminder.Model;
 
 /**
- * This is the Object class
+ * This is the Reminder Object class
  */
 
 public class Reminder {

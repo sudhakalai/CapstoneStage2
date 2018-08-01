@@ -6,7 +6,7 @@ import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 
 /**
- * x
+ * This is the custom cursor adapter for recyclerview
  */
 
 public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>  {
@@ -15,20 +15,20 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
 
     private Cursor mCursor;
 
-    private boolean mDataValid;
+    private boolean mCursorNotNull;
 
     private int mRowIdColumn;
 
-    private DataSetObserver mDataSetObserver;
+    private DataSetObserver mObserver;
 
     public ReminderCursorAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
-        mDataValid = cursor != null;
-        mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
-        mDataSetObserver = new NotifyingDataSetObserver();
+        mCursorNotNull = cursor != null;
+        mRowIdColumn = mCursorNotNull ? mCursor.getColumnIndex("_id") : -1;
+        mObserver = new NotifyingDataSetObserver();
         if (mCursor != null) {
-            mCursor.registerDataSetObserver(mDataSetObserver);
+            mCursor.registerDataSetObserver(mObserver);
         }
     }
 
@@ -38,7 +38,7 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        if (mDataValid && mCursor != null) {
+        if (mCursorNotNull && mCursor != null) {
             return mCursor.getCount();
         }
         return 0;
@@ -46,7 +46,7 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
 
     @Override
     public long getItemId(int position) {
-        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
+        if (mCursorNotNull && mCursor != null && mCursor.moveToPosition(position)) {
             return mCursor.getLong(mRowIdColumn);
         }
         return 0;
@@ -61,7 +61,7 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(VH viewHolder, int position) {
-        if (!mDataValid) {
+        if (!mCursorNotNull) {
             throw new IllegalStateException("this should only be called when the cursor is valid");
         }
         if (!mCursor.moveToPosition(position)) {
@@ -83,22 +83,21 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
             return null;
         }
         final Cursor oldCursor = mCursor;
-        if (oldCursor != null && mDataSetObserver != null) {
-            oldCursor.unregisterDataSetObserver(mDataSetObserver);
+        if (oldCursor != null && mObserver != null) {
+            oldCursor.unregisterDataSetObserver(mObserver);
         }
         mCursor = newCursor;
         if (mCursor != null) {
-            if (mDataSetObserver != null) {
-                mCursor.registerDataSetObserver(mDataSetObserver);
+            if (mObserver != null) {
+                mCursor.registerDataSetObserver(mObserver);
             }
             mRowIdColumn = newCursor.getColumnIndexOrThrow("_id");
-            mDataValid = true;
+            mCursorNotNull = true;
             notifyDataSetChanged();
         } else {
             mRowIdColumn = -1;
-            mDataValid = false;
+            mCursorNotNull = false;
             notifyDataSetChanged();
-            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
         }
         return oldCursor;
     }
@@ -107,14 +106,14 @@ public abstract class ReminderCursorAdapter <VH extends RecyclerView.ViewHolder>
         @Override
         public void onChanged() {
             super.onChanged();
-            mDataValid = true;
+            mCursorNotNull = true;
             notifyDataSetChanged();
         }
 
         @Override
         public void onInvalidated() {
             super.onInvalidated();
-            mDataValid = false;
+            mCursorNotNull = false;
             notifyDataSetChanged();
         }
     }

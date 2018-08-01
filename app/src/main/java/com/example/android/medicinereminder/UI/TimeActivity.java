@@ -10,12 +10,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +38,8 @@ import com.example.android.medicinereminder.Model.Reminder;
 import com.example.android.medicinereminder.Notifications.AlarmNotificationReceiver;
 import com.example.android.medicinereminder.R;
 import com.example.android.medicinereminder.Util.FromintegerUtils;
+import com.example.android.medicinereminder.Util.PreferenceUtils;
+import com.example.android.medicinereminder.Util.ReminderUtils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -89,7 +89,6 @@ public class TimeActivity extends AppCompatActivity {
     private DatePickerFragment mDatePickerFragment;
     private TimePickerFragment mTimePickerFragment;
     private int reminderTimesFlag = 5;
-    int alarmId;
     private static Context context;
     private boolean insertionFlag;
     private FirebaseDatabase mFirebaseDatabase;
@@ -115,13 +114,6 @@ public class TimeActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(this);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("ALARM_ID", 100);
-        editor.apply();
-
         fromPicker = findViewById(R.id.from_date_picker);
         fromDate = findViewById(R.id.from_date);
         toDate = findViewById(R.id.to_date);
@@ -135,11 +127,12 @@ public class TimeActivity extends AppCompatActivity {
         medReminders = new long[5];
         context = this;
 
+        //Firebase database reference
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mRemindersDatabaseReference = mFirebaseDatabase.getReference().child("reminders");
 
 
-
+        //intent from reminder activity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
@@ -292,12 +285,12 @@ public class TimeActivity extends AppCompatActivity {
         // for the positive and negative buttons on the dialog.
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Unsaved changes. do you want to exit?");
-        builder.setPositiveButton("Discard", discardButtonClickListener);
-        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.unsaved_dialog));
+        builder.setPositiveButton(getString(R.string.discard), discardButtonClickListener);
+        builder.setNegativeButton(getString(R.string.keep_editing), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -329,6 +322,7 @@ public class TimeActivity extends AppCompatActivity {
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
 
+        //to identify the date picker
         public void setFlag(int i) {
             flag = i;
         }
@@ -385,6 +379,7 @@ public class TimeActivity extends AppCompatActivity {
                     DateFormat.is24HourFormat(getActivity()));
         }
 
+        //to identify the time picker
         public void setFlag(int i) {
             flag = i;
         }
@@ -400,7 +395,7 @@ public class TimeActivity extends AppCompatActivity {
                 reminderOne = calendar.getTimeInMillis();
                 Log.v("testreminder", String.valueOf(reminderOne));
                 medReminders[0] = 0;
-                firstTv.setText(format.format(calendar.getTime()));
+                firstTv.setText(ReminderUtils.getTimeString(reminderOne));
                 medReminders[0] = reminderOne;
             } else if (flag == FLAG_SECOND_REMINDER) {
                 reminderTwo = calendar.getTimeInMillis();
@@ -408,7 +403,7 @@ public class TimeActivity extends AppCompatActivity {
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[1] = 0;
-                    secondTv.setText(format.format(calendar.getTime()));
+                    secondTv.setText(ReminderUtils.getTimeString(reminderTwo));
                     medReminders[1] = reminderTwo;
                 }
             }else if (flag == FLAG_THIRD_REMINDER) {
@@ -417,7 +412,7 @@ public class TimeActivity extends AppCompatActivity {
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[2] = 0;
-                    thirdTv.setText(format.format(calendar.getTime()));
+                    thirdTv.setText(ReminderUtils.getTimeString(reminderThree));
                     medReminders[2] = reminderThree;
                 }
             }else if (flag == FLAG_FOURTH_REMINDER) {
@@ -426,7 +421,7 @@ public class TimeActivity extends AppCompatActivity {
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[3] = 0;
-                    fourthTv.setText(format.format(calendar.getTime()));
+                    fourthTv.setText(ReminderUtils.getTimeString(reminderFour));
                     medReminders[3] = reminderFour;
                 }
             }else if (flag == FLAG_FIFTH_REMINDER) {
@@ -435,7 +430,7 @@ public class TimeActivity extends AppCompatActivity {
                     Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[4] = 0;
-                    fifthTv.setText(format.format(calendar.getTime()));
+                    fifthTv.setText(ReminderUtils.getTimeString(reminderFive));
                     medReminders[4] = reminderFive;
                 }
             }
@@ -443,6 +438,7 @@ public class TimeActivity extends AppCompatActivity {
     }
 
 
+    //Async task to insert data into database
     public class InsertReminderAsyncTask extends AsyncTask<Void, Void, Void>{
 
         Context context = getBaseContext();
@@ -514,7 +510,6 @@ public class TimeActivity extends AppCompatActivity {
                 createReminder(medName,medType, medDosage,medMeasure,medColor,medShape,medFromDate,medToDate, medNotes, medReminders, id);
             }
 
-           Log.v("testcursor", reminderCursor.getCount() + "=" + timeCursor.getCount());
             cursor.close();
             timeCursor.close();
 
@@ -533,6 +528,7 @@ public class TimeActivity extends AppCompatActivity {
         }
     }
 
+    //validating input
     public boolean validateInput(){
         boolean flag = false;
         if(fromDate.getText().toString().isEmpty()){
@@ -575,6 +571,7 @@ public class TimeActivity extends AppCompatActivity {
         return flag;
     }
 
+    //creating reminders in firebase and setting alarms
     public void createReminder(String medName, int medType, int dosage, int measure, int color, int shape, long fromDate,long toDate, String notes, long[] reminders,int reminderId){
         ArrayList<Reminder> reminderList = new ArrayList<>();
         long from = getTrueDate(fromDate);
@@ -582,10 +579,8 @@ public class TimeActivity extends AppCompatActivity {
         for(long k= from; k<= to; k=k+86400000){
             for(int i=0; i<5; i++){
                 if(reminders[i] != 0){
-                    SharedPreferences sharedPreferences = PreferenceManager
-                            .getDefaultSharedPreferences(this);
-                    alarmId = sharedPreferences.getInt("ALARM_ID", 0)+1;
-                    sharedPreferences.edit().putInt("ALARM_ID", alarmId);
+                    PreferenceUtils.incrementAlarmId(context);
+                   int alarmId = PreferenceUtils.getAlarmId(context);
                     reminderList.add(new Reminder(
                             medName,
                             FromintegerUtils.getMedicineTypeString(medType, context),
@@ -612,6 +607,7 @@ public class TimeActivity extends AppCompatActivity {
         }
     }
 
+    //retuns true date in long removing the time
     public long getTrueDate(long date){
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String trueDateString = format.format(date);
@@ -624,6 +620,7 @@ public class TimeActivity extends AppCompatActivity {
         return 0;
     }
 
+    //retuns true time in long removing the date
     public long getTrueTime(long time){
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         String trueTimeString = format.format(time);
@@ -643,11 +640,56 @@ public class TimeActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
-        Log.v("testnotify", String.valueOf(calendar.getTimeInMillis()));
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);//get instance of alarm manager
         manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);//set alarm manager with entered timer by converting into milliseconds
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("fromDate", fromDate.getText().toString());
+        outState.putString("toDate", toDate.getText().toString());
+        if(firstTv.getVisibility()== View.VISIBLE){
+            outState.putString("reminderOne", firstTv.getText().toString());
+        }
+        if(secondTv.getVisibility()== View.VISIBLE){
+            outState.putString("reminderTwo", secondTv.getText().toString());
+        }
+        if(thirdTv.getVisibility()== View.VISIBLE){
+            outState.putString("reminderThree", thirdTv.getText().toString());
+        }
+        if(fourthTv.getVisibility()== View.VISIBLE){
+            outState.putString("reminderFour", fourthTv.getText().toString());
+        }
+        if(fifthTv.getVisibility()== View.VISIBLE){
+            outState.putString("reminderfive", fifthTv.getText().toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState != null)
+        {
+            fromDate.setText(savedInstanceState.getString("fromDate"));
+            toDate.setText(savedInstanceState.getString("toDate"));
+            if(firstTv.getVisibility()== View.VISIBLE){
+                firstTv.setText(savedInstanceState.getString("reminderOne"));
+            }
+            if(secondTv.getVisibility()== View.VISIBLE){
+                secondTv.setText(savedInstanceState.getString("reminderTwo"));
+            }
+            if(thirdTv.getVisibility()== View.VISIBLE){
+                thirdTv.setText(savedInstanceState.getString("reminderThree"));
+            }
+            if(fourthTv.getVisibility()== View.VISIBLE){
+                fourthTv.setText(savedInstanceState.getString("reminderFour"));
+            }
+            if(fifthTv.getVisibility()== View.VISIBLE){
+                fifthTv.setText(savedInstanceState.getString("reminderFive"));
+            }
+        }
+    }
 }

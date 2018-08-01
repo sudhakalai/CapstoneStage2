@@ -7,6 +7,7 @@ import com.example.android.medicinereminder.R;
 
 /**
  * This Util class has methods that return integer value of the selected item in the spinner.
+ * as color, type, measure and shape values are stored as integer in database
  */
 
 public  class ToIntegerUtils {

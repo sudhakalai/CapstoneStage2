@@ -5,7 +5,9 @@ import android.content.Context;
 import com.example.android.medicinereminder.R;
 
 /**
- * This is the Util class which has methods that take in an integer an return the corresponding shape, color or measure value
+ * This is the Util class which has methods that take in an integer and
+ * returns the corresponding shape, color or measure value
+ * as these values are stored as integer in database
  */
 
 public class FromintegerUtils {

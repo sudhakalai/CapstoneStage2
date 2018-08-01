@@ -1,5 +1,7 @@
 package com.example.android.medicinereminder.Model;
 
+//This is the reminderEdit Object class
+
 public class ReminderEdit {
 
     private String medName;

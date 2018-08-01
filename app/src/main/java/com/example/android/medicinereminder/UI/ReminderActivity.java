@@ -35,6 +35,7 @@ public class ReminderActivity extends AppCompatActivity {
     Context context;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,7 @@ public class ReminderActivity extends AppCompatActivity {
             case R.id.action_next:
 
                 if(validateInput()){
+                    //sending information in an intent to TimeActivity
                     Intent intent = new Intent(this, TimeActivity.class);
                     Bundle b = new Bundle();
                     b.putString("medicineName", medicineNameET.getText().toString());
@@ -92,9 +94,7 @@ public class ReminderActivity extends AppCompatActivity {
 
             case android.R.id.home:
 
-                    // Otherwise if there are unsaved changes, setup a dialog to warn the user.
-                    // Create a click listener to handle the user confirming that
-                    // changes should be discarded
+                    // Create a click listener to handle the user confirming that changes should be discarded
                     DialogInterface.OnClickListener discardButtonClickListener =
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -117,12 +117,12 @@ public class ReminderActivity extends AppCompatActivity {
         // for the positive and negative buttons on the dialog.
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want to exit?");
-        builder.setPositiveButton("Discard", discardButtonClickListener);
-        builder.setNegativeButton("Keep editing", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.unsaved));
+        builder.setPositiveButton(getString(R.string.discard), discardButtonClickListener);
+        builder.setNegativeButton(getString(R.string.keep_editing), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -134,6 +134,7 @@ public class ReminderActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    //validate input
     public boolean validateInput(){
         boolean flag;
         if(medicineNameET.getText().toString().isEmpty()){
@@ -151,4 +152,35 @@ public class ReminderActivity extends AppCompatActivity {
         return flag;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("MedName", medicineNameET.getText().toString());
+        outState.putInt("medType", medicineType.getSelectedItemPosition());
+        outState.putInt("medColor", medicineColor.getSelectedItemPosition());
+        outState.putInt("medShape", medicineShape.getSelectedItemPosition());
+        outState.putString("medStock", stockET.getText().toString());
+        outState.putString("medDosage", dosageET.getText().toString());
+        outState.putInt("medMeasure", measure.getSelectedItemPosition());
+        outState.putInt("medTimes", timesADay.getSelectedItemPosition());
+        outState.putString("medNotes", notesET.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState != null)
+        {
+            medicineNameET.setText(savedInstanceState.getString("MedName"));
+            medicineType.setSelection(savedInstanceState.getInt("medType"));
+            medicineColor.setSelection(savedInstanceState.getInt("medColor"));
+            medicineShape.setSelection(savedInstanceState.getInt("medShape"));
+            stockET.setText(savedInstanceState.getString("medStock"));
+            dosageET.setText(savedInstanceState.getString("medDosage"));
+            measure.setSelection(savedInstanceState.getInt("medMeasure"));
+            timesADay.setSelection(savedInstanceState.getInt("medTimes"));
+            notesET.setText(savedInstanceState.getString("medNotes"));
+
+        }
+    }
 }

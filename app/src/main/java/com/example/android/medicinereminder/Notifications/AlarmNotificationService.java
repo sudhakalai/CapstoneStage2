@@ -1,6 +1,7 @@
 package com.example.android.medicinereminder.Notifications;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -44,6 +45,7 @@ public class AlarmNotificationService extends IntentService {
         NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
                 this).setContentTitle("Medicine Reminder").setSmallIcon(R.mipmap.ic_launcher)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setContentText(msg).setAutoCancel(true);
         alamNotificationBuilder.setContentIntent(contentIntent);
 

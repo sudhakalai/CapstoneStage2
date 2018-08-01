@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //Ads
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //To populate widget
     public class TodayMedicineListAsyncTask extends AsyncTask<Void, Void, Void> {
 
         @Override
