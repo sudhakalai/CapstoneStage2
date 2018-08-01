@@ -65,6 +65,7 @@
         android:layout_marginEnd="@dimen/dimen_32"
         android:layout_marginBottom="@dimen/dimen_64"
         android:id="@+id/fab_reminder"
+        android:contentDescription="@string/add_reminder_fab"
         android:src="@drawable/ic_add_black_24dp"
         app:layout_anchorGravity="bottom|right|end"
         android:layout_gravity="end|bottom"

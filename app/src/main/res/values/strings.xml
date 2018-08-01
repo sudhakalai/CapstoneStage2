@@ -125,6 +125,18 @@
     <string name="discard">"Discard"</string>
     <string name="keep_editing">"Keep editing"</string>
 
+    <string name="add_reminder_fab">Add reminder button</string>
+    <string name="close">Close</string>
+    <string name="next">Next</string>
+    <string name="one_or_more">One or more fields are empty</string>
+    <string name="from_date_check">From date should be not be less than todays date</string>
+    <string name="to_date_check">To date should be greater than todays date</string>
+    <string name="to_date_check2">To date should be greater than From date</string>
+    <string name="reminder_time_check">Reminder time should be greater that previous reminders</string>
+    <string name="reminder_added">Reminder added!!!</string>
+    <string name="reminder_add_failed">Failed to add Reminder!!!</string>
+    <string name="deleting">Deleting all date!!!</string>
+
 
 
 </resources>

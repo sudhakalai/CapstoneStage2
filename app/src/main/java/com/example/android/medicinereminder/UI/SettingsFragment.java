@@ -51,7 +51,7 @@ public class SettingsFragment extends PreferenceFragment {
                 getActivity().getContentResolver().delete(ReminderEntry.CONTENT_URI_TIME, null, null);
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                 ref.removeValue();
-                Toast.makeText(getActivity().getBaseContext(),"Deleting all data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getBaseContext(),getString(R.string.deleting), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

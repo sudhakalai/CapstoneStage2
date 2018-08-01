@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,7 +170,6 @@ public class TodayFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Log.v("testlist", reminders.size()+"");
         firebaseAdapter.stopListening();
     }
 

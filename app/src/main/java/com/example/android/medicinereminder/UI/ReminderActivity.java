@@ -87,7 +87,7 @@ public class ReminderActivity extends AppCompatActivity {
                     intent.putExtras(b);
                     startActivity(intent);
                 }else {
-                    Toast.makeText(context, "One or more fields are empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.one_or_more), Toast.LENGTH_SHORT).show();
                 }
 
                 return true;

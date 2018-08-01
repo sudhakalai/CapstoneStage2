@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -268,7 +267,7 @@ public class TimeActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }else {
-                    Toast.makeText(context, "One or more field are empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.one_or_more), Toast.LENGTH_SHORT).show();
                 }
                 return true;
 
@@ -335,16 +334,16 @@ public class TimeActivity extends AppCompatActivity {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             if (flag == FLAG_FROM_DATE) {
                 if(calendar.getTimeInMillis()< today){
-                    Toast.makeText(context, "From date should be not be less than today's date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getString(R.string.from_date_check), Toast.LENGTH_LONG).show();
                 }else {
                     fromDate.setText(format.format(calendar.getTime()));
                     medFromDate = calendar.getTimeInMillis();
                 }
             } else if (flag == FLAG_TO_DATE) {
                 if(calendar.getTimeInMillis()<= today){
-                    Toast.makeText(context, "To date should be greater than today's date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getString(R.string.to_date_check), Toast.LENGTH_LONG).show();
                 }else if(calendar.getTimeInMillis()<medFromDate){
-                    Toast.makeText(context, "To date should be greater than From date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, getString(R.string.to_date_check2), Toast.LENGTH_LONG).show();
                 }else {
                     toDate.setText(format.format(calendar.getTime()));
                     medToDate = calendar.getTimeInMillis();
@@ -393,14 +392,13 @@ public class TimeActivity extends AppCompatActivity {
 
             if (flag == FLAG_FIRST_REMINDER) {
                 reminderOne = calendar.getTimeInMillis();
-                Log.v("testreminder", String.valueOf(reminderOne));
                 medReminders[0] = 0;
                 firstTv.setText(ReminderUtils.getTimeString(reminderOne));
                 medReminders[0] = reminderOne;
             } else if (flag == FLAG_SECOND_REMINDER) {
                 reminderTwo = calendar.getTimeInMillis();
                 if(reminderTwo <= reminderOne){
-                    Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.reminder_time_check), Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[1] = 0;
                     secondTv.setText(ReminderUtils.getTimeString(reminderTwo));
@@ -409,7 +407,7 @@ public class TimeActivity extends AppCompatActivity {
             }else if (flag == FLAG_THIRD_REMINDER) {
                 reminderThree = calendar.getTimeInMillis();
                 if(reminderThree <= reminderTwo){
-                    Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.reminder_time_check), Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[2] = 0;
                     thirdTv.setText(ReminderUtils.getTimeString(reminderThree));
@@ -418,7 +416,7 @@ public class TimeActivity extends AppCompatActivity {
             }else if (flag == FLAG_FOURTH_REMINDER) {
                 reminderFour = calendar.getTimeInMillis();
                 if(reminderFour <= reminderThree){
-                    Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.reminder_time_check), Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[3] = 0;
                     fourthTv.setText(ReminderUtils.getTimeString(reminderFour));
@@ -427,7 +425,7 @@ public class TimeActivity extends AppCompatActivity {
             }else if (flag == FLAG_FIFTH_REMINDER) {
                 reminderFive = calendar.getTimeInMillis();
                 if(reminderFive <= reminderFour){
-                    Toast.makeText(context, "Reminder time should be greater that previous reminders", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.reminder_time_check), Toast.LENGTH_SHORT).show();
                 }else {
                     medReminders[4] = 0;
                     fifthTv.setText(ReminderUtils.getTimeString(reminderFive));
@@ -470,7 +468,6 @@ public class TimeActivity extends AppCompatActivity {
 
             ContentValues values = new ContentValues();
             values.put(ReminderEntry.REMINDER_ONE, medReminders[0]);
-            Log.v("testtest", String.valueOf(medReminders[0]));
             if(reminderTimesFlag == 2){
                 values.put(ReminderEntry.REMINDER_TWO, medReminders[1]);
             }else if(reminderTimesFlag == 3){
@@ -521,9 +518,9 @@ public class TimeActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             if(insertionFlag){
-                Toast.makeText(context, "Reminder added!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.reminder_added), Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(context, "Failed to add Reminder!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.reminder_add_failed), Toast.LENGTH_SHORT).show();
             }
         }
     }

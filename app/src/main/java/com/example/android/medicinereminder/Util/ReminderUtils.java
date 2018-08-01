@@ -1,7 +1,5 @@
 package com.example.android.medicinereminder.Util;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,7 +29,6 @@ public class ReminderUtils {
 
     //converts arraylist to string
     public static String toBaseString(ArrayList<String> reminders) {
-        Log.v("testgson", reminders.size()+"");
         Gson gson = new Gson();
         return gson.toJson(reminders);
     }
@@ -42,7 +39,6 @@ public class ReminderUtils {
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<String>>() {}.getType();
             ArrayList<String> reminders= gson.fromJson(encoded, type);
-            Log.v("testgson", reminders.size()+"");
             return gson.fromJson(encoded, type);
 
         }

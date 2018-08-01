@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'MedRemind'
-            keyPassword 'kalaikalai'
+            keyAlias 'key0'
+            keyPassword 'sudhasudha'
             storeFile file('$rootDir/android.jks')
-            storePassword 'kalaikalai'
+            storePassword 'sudhasudha'
         }
     }
     compileSdkVersion 27
@@ -23,6 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {

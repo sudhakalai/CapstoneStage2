@@ -3,7 +3,6 @@ package com.example.android.medicinereminder.Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,6 @@ public class ReminderAdapter extends ReminderCursorAdapter<ReminderAdapter.Remin
     @Override
     public void onBindViewHolder(ReminderViewholder viewHolder, Cursor cursor) {
         String medName = cursor.getString(cursor.getColumnIndex(ReminderEntry.MEDICINE_NAME));
-        Log.v("testtest", medName);
         long fromDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.FROM_DATE));
         long toDate = cursor.getLong(cursor.getColumnIndex(ReminderEntry.TO_DATE));
         String date = ReminderUtils.getDateString(fromDate) + " to " + ReminderUtils.getDateString(toDate);

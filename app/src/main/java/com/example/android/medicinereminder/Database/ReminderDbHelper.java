@@ -3,7 +3,6 @@ package com.example.android.medicinereminder.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.android.medicinereminder.Database.ReminderContract.ReminderEntry;
 
@@ -55,8 +54,6 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_REMINDER_TABLE);
         db.execSQL(SQL_CREATE_REMINDER_TIME_TABLE);
 
-        Log.v("databasequery", SQL_CREATE_REMINDER_TABLE);
-        Log.v("databasequery", SQL_CREATE_REMINDER_TIME_TABLE);
 
     }
 
